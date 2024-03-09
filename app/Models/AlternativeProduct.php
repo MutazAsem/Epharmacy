@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Alternative_Product extends Model
+class AlternativeProduct extends Model
 {
     use HasFactory;
 
@@ -16,7 +15,7 @@ class Alternative_Product extends Model
     ];
 
 
-    public function child ():BelongsTo
+    public function product_alternativ ():BelongsTo
     {
         return $this->belongsTo(Product::class,'product_id');
     }
