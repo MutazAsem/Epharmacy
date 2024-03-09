@@ -25,14 +25,25 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name'),
-                        Forms\Components\TextInput::make('description'),
-                        Forms\Components\Select::make('parent_id')
-                        ->relationship('parent','name'),
-                        Forms\Components\Toggle::make('state'),  
-                    ])->columns(2)
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('name'),
+                                Forms\Components\TextInput::make('description') 
+                            ])
+                        ]),
+
+                    Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\Select::make('parent_id')
+                                ->relationship('parent','name'),
+                                Forms\Components\Toggle::make('state'),  
+                            ])
+                    ])
+                
             ]);
     }
 
