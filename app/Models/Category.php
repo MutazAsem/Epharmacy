@@ -12,7 +12,7 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','description','parent_id','state'
+        'name','description','parent_id','status',
     ];
 
     public function parent ():BelongsTo{

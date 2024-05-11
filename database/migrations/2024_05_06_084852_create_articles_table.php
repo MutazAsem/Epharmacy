@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->boolean('status')->default(true);
+            $table->string('title');
+            $table->text('content');
+            $table->string('image')->default('articles_default_image.png');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            $table->foreign('parent_id')->references('id')->on('categories')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('articles');
     }
 };
