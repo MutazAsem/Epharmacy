@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\CountryEnum;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
@@ -12,6 +13,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Filters\SelectFilter;
+
+
 
 class ProductResource extends Resource
 {
@@ -29,7 +37,7 @@ class ProductResource extends Resource
                         ->schema([
                             Forms\Components\TextInput::make('name'),
                             Forms\Components\TextInput::make('description'),
-                            Forms\Components\TextInput::make('made_in'),
+                            Forms\Components\Select::make('made_in')->options(CountryEnum::class)->searchable(),
                             Forms\Components\TextInput::make('manufacture_company'), 
                             Forms\Components\TextInput::make('type'), 
                             Forms\Components\TextInput::make('effective_material'), 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CountryEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,20 +18,20 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedBigInteger('category_id');
-            $table->string('made_in');
+            $table->enum('made_in', [$countries = config('countries.countries')]);
             $table->string('image')->default('product_default.png');
             $table->string('manufacture_company');
             $table->string('type');
-            $table->string('effective_material');
-            $table->string('indications');
-            $table->string('dosage');
-            $table->string('side_effects');
-            $table->string('contraindications');
-            $table->string('packaging');
-            $table->string('storage');
-            $table->boolean('state')->default(false);
+            $table->string('effective_material')->nullable();
+            $table->string('indications')->nullable();
+            $table->string('dosage')->nullable();
+            $table->string('side_effects')->nullable();
+            $table->string('contraindications')->nullable();
+            $table->string('packaging')->nullable();
+            $table->string('storage')->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
 
         });
     }

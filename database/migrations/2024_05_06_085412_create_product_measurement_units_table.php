@@ -12,13 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('alternative_products', function (Blueprint $table) {
+        Schema::create('product_measurement_units', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('measurement_units_id');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('alternativ_product_id');
+            $table->decimal('quantity',10,2);
+            $table->decimal('price',10,2);
             $table->timestamps();
+            $table->foreign('measurement_units_id')->references('id')->on('measruing_units');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('alternativ_product_id')->references('id')->on('products');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alternative_products');
+        Schema::dropIfExists('product_measurement_units');
     }
 };
