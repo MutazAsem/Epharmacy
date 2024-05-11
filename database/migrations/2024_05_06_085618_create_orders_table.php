@@ -20,6 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('address_id');
             $table->decimal('total_price',10,2);
             $table->unsignedBigInteger('delivery_id');
+            $table->string('note');
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('users');
             $table->foreign('address_id')->references('id')->on('addresses');

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('total_quantity',10,2);
             $table->unsignedBigInteger('product_measurement_units_id');
             $table->decimal('total_product_price',10,2);
+            $table->softDeletes();
             $table->timestamps();
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('product_id')->references('id')->on('products');
