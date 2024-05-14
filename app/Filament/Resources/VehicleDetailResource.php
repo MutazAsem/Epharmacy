@@ -32,6 +32,10 @@ class VehicleDetailResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('parent.name'),
+                Tables\Columns\IconColumn::make('status')->boolean(),
             ])
             ->filters([
                 //
