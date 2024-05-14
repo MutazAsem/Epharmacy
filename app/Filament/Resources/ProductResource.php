@@ -56,7 +56,7 @@ class ProductResource extends Resource
                             Forms\Components\TextInput::make('contraindications'),
                             Forms\Components\TextInput::make('packaging'),
                             Forms\Components\TextInput::make('storage'),
-                            Forms\Components\Toggle::make('state'),  
+                            Forms\Components\Toggle::make('status'),  
                         ]),
 
                     Forms\Components\Section::make('Image')
@@ -85,7 +85,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('contraindications'),
                 Tables\Columns\TextColumn::make('packaging'),
                 Tables\Columns\TextColumn::make('storage'),
-                Tables\Columns\IconColumn::make('state')->boolean()
+                Tables\Columns\IconColumn::make('status')->boolean()
 
 
 
