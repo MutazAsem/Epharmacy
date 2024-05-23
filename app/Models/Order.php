@@ -16,7 +16,7 @@ class Order extends Model
 
 
     protected $fillable = [
-        'client_id','status','payment_method','address_id','total_price','delivery_id',
+        'client_id','status','payment_method','address_id','total_price','delivery_id','note'
     ];
 
     protected $casts = [
@@ -36,6 +36,12 @@ class Order extends Model
     public function order_detail ():HasMany
     {
         return $this->hasMany(OrderDetail::class,'order_id');
+    }
+
+    public function order_address():BelongsTo
+
+    {
+        return $this->belongsTo(Address::class,'address_id');
     }
 
 
