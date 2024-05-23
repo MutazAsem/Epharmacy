@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ArticleResource\Pages;
 use App\Filament\Resources\ArticleResource\RelationManagers;
 use App\Models\Article;
+use Doctrine\DBAL\Schema\Schema;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleResource extends Resource
 {
@@ -23,21 +25,44 @@ class ArticleResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
+                
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('title')
+                                        ->required()
+                                        ->live(onBlur:true),
+                                Forms\Components\MarkdownEditor::make('content'),
+                                Forms\Components\FileUpload::make('image')
+                                        ->image(),
+                                Forms\Components\TextInput::make('user_id')
+                                ->label('User ID')
+                                ->hidden(), 
+                                
+                                    
+                                    ]),
+                             
+                    ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('Title')
+                        ->label('Article title '),
+                Tables\Columns\TextColumn::make('content'),
+                Tables\Columns\ImageColumn::make('image'),
+                
+                        
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('user_id')
+                ->relationship('writer','name'),
+                
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

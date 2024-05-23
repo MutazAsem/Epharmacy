@@ -40,7 +40,7 @@ class CategoryResource extends Resource
                             ->schema([
                                 Forms\Components\Select::make('parent_id')
                                 ->relationship('parent','name'),
-                                Forms\Components\Toggle::make('state'),  
+                                Forms\Components\Toggle::make('status'),  
                             ])
                     ])
                 
@@ -55,7 +55,7 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('parent.name'),
-                Tables\Columns\IconColumn::make('state')->boolean()
+                Tables\Columns\IconColumn::make('status')->boolean()
 
             ])
             ->filters([
