@@ -4,7 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\VehicleDetailResource\Pages;
 use App\Filament\Resources\VehicleDetailResource\RelationManagers;
+use App\Models\User;
 use App\Models\VehicleDetail;
+use Doctrine\DBAL\Schema\Column;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -24,6 +27,20 @@ class VehicleDetailResource extends Resource
         return $form
             ->schema([
                 //
+                Forms\Components\Group::make()
+                    ->schema([
+
+                        Forms\Components\Section::make()
+
+                        ->schema([
+
+                            Forms\Components\TextInput::make('plate_number')->required()->live()->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)->rules('numeric', 'min:0')->minValue(0)->maxLength(999999),
+                            Forms\Components\Select::make('vehicle_type')->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)->required()->options(['Car'=>'Car','Truck'=>'Truck','Bus'=>'Bus','Taxi'=>'Taxi','Bicycle'=>'Bicycle','Motorcycle'=>'Motorcycle']),
+                            Forms\Components\Select::make('delivery_id')->required()->options(User::all()->pluck('name', 'id')->toArray()),
+                        ])
+
+                        
+                        ]),
             ]);
     }
 
@@ -32,12 +49,24 @@ class VehicleDetailResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\TextColumn::make('plate_number')->searchable()->sortable()->toggleable(),
+                Tables\Columns\TextColumn::make('vehicle_type')->searchable()->sortable()->toggleable(),
+                Tables\Columns\TextColumn::make('delivery_id')->searchable()->sortable()->toggleable(),
+                Tables\Columns\TextColumn::make('created_at')->searchable()->sortable()->toggleable()->date(),
+                Tables\Columns\TextColumn::make('updated_at')->searchable()->sortable()->toggleable()->date(),
             ])
             ->filters([
                 //
+                Tables\Filters\SelectFilter::make('delivery vehicle name')
+                ->relationship('delivery_vehicle' , 'name'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
