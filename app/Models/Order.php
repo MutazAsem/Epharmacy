@@ -16,7 +16,7 @@ class Order extends Model
 
 
     protected $fillable = [
-        'client_id','status','payment_method','address_id','total_price','delivery_id',
+        'client_id','status','payment_method','address_id','total_price','delivery_id','note'
     ];
 
     protected $casts = [
@@ -37,7 +37,5 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class,'order_id');
     }
-
-
     
 }
