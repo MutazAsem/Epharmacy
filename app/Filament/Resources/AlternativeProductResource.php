@@ -17,7 +17,7 @@ class AlternativeProductResource extends Resource
 {
     protected static ?string $model = AlternativeProduct::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrows-right-left';
 
     public static function form(Form $form): Form
     {
