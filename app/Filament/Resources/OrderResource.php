@@ -80,6 +80,9 @@ class OrderResource extends Resource
 
                 Tables\Filters\SelectFilter::make('delivery name')
                 ->relationship('order_delivery' , 'name'),
+
+                Tables\Filters\SelectFilter::make('address name')
+                ->relationship('order_address' , 'name'),
                 
             ])
             ->actions([

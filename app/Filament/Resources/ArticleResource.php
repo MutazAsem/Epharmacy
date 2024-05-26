@@ -48,7 +48,7 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Title')
+                Tables\Columns\TextColumn::make('title')
                     ->label('Article title '),
                 Tables\Columns\TextColumn::make('content'),
                 Tables\Columns\ImageColumn::make('image'),
