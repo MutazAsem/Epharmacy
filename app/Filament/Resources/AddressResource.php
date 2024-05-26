@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Filament\Resources;
-
+use App\Enums\CityEnum;
+use Filament\Tables\Columns\TextColumn;
+use PhpParser\Node\Expr\Ternary;
 use App\Filament\Resources\AddressResource\Pages;
 use App\Filament\Resources\AddressResource\RelationManagers;
 use App\Models\Address;
@@ -23,7 +25,28 @@ class AddressResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Group::make()
+                ->schema([
+                    Forms\Components\Section::make()
+                    ->schema([
+                        forms\Components\TextInput::make('name')
+                                ->required()
+                                ->live(onBlur:true),
+                        forms\Components\TextInput::make('description')
+                                ->required(),
+                        Forms\Components\Select::make('city')->options(CityEnum::class)
+                                ->searchable(),
+                        forms\Components\TextInput::make('address_link')
+                                ->required(),
+                        forms\Components\Select::make('user_id')
+                                ->relationship('user_address','name')
+                                ->label('user_name')
+                                ->required()
+                                ->searchable(),
+
+                    ])
+                ])
+
             ]);
     }
 
@@ -31,13 +54,20 @@ class AddressResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                        ->label('Address Name'),
+                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('city'),
+                Tables\Columns\TextColumn::make('address_link'),
+                Tables\Columns\TextColumn::make('user_address.name'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('user_id')
+                      ->relationship('user_address','name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -23,7 +23,7 @@ class MeasruingUnitResource extends Resource
     {
         return $form
             ->schema([
-                //
+                forms\Components\TextInput::make('name'),
             ]);
     }
 
@@ -31,13 +31,16 @@ class MeasruingUnitResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Name of measruing unit'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('measurement_units_id')
+                ->relationship('product_unit','name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
