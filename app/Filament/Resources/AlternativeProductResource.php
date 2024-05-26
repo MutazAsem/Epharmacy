@@ -23,7 +23,21 @@ class AlternativeProductResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Group::make()
+                ->schema([
+                    Forms\Components\Section::make()
+                        ->schema([
+                            Forms\Components\Select::make('product_id')
+                                ->relationship('product_alternativ','name')
+                                ->searchable()
+                                ->required(),
+                            Forms\Components\Select::make('alternativ_product_id')
+                                ->relationship('alternativ_product','name')
+                                ->searchable()
+                                ->required(),
+                                ])
+
+                    ])
             ]);
     }
 
@@ -31,16 +45,20 @@ class AlternativeProductResource extends Resource
     {
         return $table
             ->columns([
-                //
-            ])
+                Tables\Columns\TextColumn::make('product_alternativ.name'),
+                Tables\Columns\TextColumn::make('alternativ_product.name'),
+
+                                ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('product_id')
+                ->relationship('product_alternativ','name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                     Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
