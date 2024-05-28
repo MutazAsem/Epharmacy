@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('made_in', [$countries = config('countries.countries')]);
             $table->string('image')->default('product_default.png');
             $table->string('manufacture_company');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('effective_material')->nullable();
             $table->string('indications')->nullable();
             $table->string('dosage')->nullable();

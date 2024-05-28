@@ -34,9 +34,26 @@ class VehicleDetailResource extends Resource
 
                         ->schema([
 
-                            Forms\Components\TextInput::make('plate_number')->required()->live()->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)->rules('numeric', 'min:0')->minValue(0)->maxLength(999999),
-                            Forms\Components\Select::make('vehicle_type')->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)->required()->options(['Car'=>'Car','Truck'=>'Truck','Bus'=>'Bus','Taxi'=>'Taxi','Bicycle'=>'Bicycle','Motorcycle'=>'Motorcycle']),
-                            Forms\Components\Select::make('delivery_id')->required()->options(User::all()->pluck('name', 'id')->toArray()),
+                            Forms\Components\TextInput::make('plate_number')
+                            ->required()
+                            ->live()
+                            ->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)
+                            ->rules('numeric', 'min:0')
+                            ->minValue(0)
+                            ->maxLength(999999),
+                            Forms\Components\Select::make('vehicle_type')
+                            ->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)
+                            ->required()
+                            ->options(['Car'=>'Car','Truck'=>'Truck','Bus'=>'Bus','Taxi'=>'Taxi','Bicycle'=>'Bicycle','Motorcycle'=>'Motorcycle'])
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('delivery_id')
+                            ->required()
+                            ->options(User::all()
+                            ->pluck('name', 'id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
                         ])
 
                         

@@ -35,14 +35,16 @@ class AddressResource extends Resource
                         forms\Components\TextInput::make('description')
                                 ->required(),
                         Forms\Components\Select::make('city')->options(CityEnum::class)
-                                ->searchable(),
+                                ->searchable()
+                                ->preload(),
                         forms\Components\TextInput::make('address_link')
                                 ->required(),
                         forms\Components\Select::make('user_id')
                                 ->relationship('user_address','name')
                                 ->label('user_name')
                                 ->required()
-                                ->searchable(),
+                                ->searchable()
+                                ->preload(),
 
                     ])
                 ])

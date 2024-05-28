@@ -34,9 +34,25 @@ class OrderDetailResource extends Resource
                         Forms\Components\Section::make()
 
                         ->schema([
-                            Forms\Components\Select::make('order_id')->required()->options(Order::pluck('id')->toArray()),
-                            Forms\Components\Select::make('product_id')->required()->options(Product::all()->pluck('name', 'id')->toArray()),
-                            Forms\Components\Select::make('product_measurement_units_id')->required()->options(ProductMeasurementUnit::all()->pluck('name', 'id')->toArray()),
+                            Forms\Components\Select::make('order_id')
+                            ->required()
+                            ->options(Order::pluck('id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('product_id')
+                            ->required()
+                            ->options(Product::all()->pluck('name', 'id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('product_measurement_units_id')
+                            ->required()
+                            ->options(ProductMeasurementUnit::all()
+                            ->pluck('name', 'id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
                         ])
                         ]),
 

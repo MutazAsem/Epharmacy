@@ -47,8 +47,19 @@ class ProductMeasurementUnitResource extends Resource
 
                         ->schema([
 
-                            Forms\Components\Select::make('measurement_units_id')->required()->options(MeasruingUnit::all()->pluck('name','id')->toArray()),
-                            Forms\Components\Select::make('product_id')->required()->options(Product::all()->pluck('name', 'id')->toArray()),
+                            Forms\Components\Select::make('measurement_units_id')
+                            ->required()
+                            ->options(MeasruingUnit::all()
+                            ->pluck('name','id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('product_id')
+                            ->required()->options(Product::all()
+                            ->pluck('name', 'id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
                         ])->columns(2)
                         
                         ]),
