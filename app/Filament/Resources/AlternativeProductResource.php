@@ -30,10 +30,12 @@ class AlternativeProductResource extends Resource
                             Forms\Components\Select::make('product_id')
                                 ->relationship('product_alternativ','name')
                                 ->searchable()
+                                ->preload()
                                 ->required(),
                             Forms\Components\Select::make('alternativ_product_id')
                                 ->relationship('alternativ_product','name')
                                 ->searchable()
+                                ->preload()
                                 ->required(),
                                 ])
 
