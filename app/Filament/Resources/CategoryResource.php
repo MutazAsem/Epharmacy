@@ -39,7 +39,9 @@ class CategoryResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Select::make('parent_id')
-                                ->relationship('parent','name'),
+                                ->relationship('parent','name')
+                                ->searchable()
+                                ->preload(),
                                 Forms\Components\Toggle::make('status'),  
                             ])
                     ])

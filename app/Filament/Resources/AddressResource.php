@@ -40,7 +40,10 @@ class AddressResource extends Resource
                         Forms\Components\Select::make('city')
                         ->options(CityEnum::class)
                         ->searchable(),
-                        
+                                ->required(),
+                        Forms\Components\Select::make('city')->options(CityEnum::class)
+                                ->searchable()
+                                ->preload(),
                         forms\Components\TextInput::make('address_link')
                         ->required(),
                         
@@ -48,7 +51,8 @@ class AddressResource extends Resource
                                 ->relationship('user_address','name')
                                 ->label('Clint name')
                                 ->required()
-                                ->searchable(),
+                                ->searchable()
+                                ->preload(),
 
                     ])
                 ])->columnSpanFull()

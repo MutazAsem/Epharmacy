@@ -42,7 +42,10 @@ class ProductResource extends Resource
                         ->schema([
                             Forms\Components\TextInput::make('name'),
                             Forms\Components\TextInput::make('description'),
-                            Forms\Components\Select::make('made_in')->options(CountryEnum::class)->searchable(),
+                            Forms\Components\Select::make('made_in')
+                            ->options(CountryEnum::class)
+                            ->searchable()
+                            ->preload(),
                             Forms\Components\TextInput::make('manufacture_company'), 
                             Forms\Components\TextInput::make('type'), 
                             Forms\Components\TextInput::make('effective_material'), 
@@ -55,7 +58,9 @@ class ProductResource extends Resource
                     Forms\Components\Section::make()
                         ->schema([
                             Forms\Components\Select::make('category_id')
-                            ->relationship('product_category','name'),
+                            ->relationship('product_category','name')
+                            ->searchable()
+                            ->preload(),
                             Forms\Components\TextInput::make('dosage'),
                             Forms\Components\TextInput::make('side_effects'),
                             Forms\Components\TextInput::make('contraindications'),

@@ -47,6 +47,23 @@ class OrderDetailResource extends Resource
                             ->required()
                             ->label('Name of product measurement units')
                             ->relationship('order_product_measurement_unit','name'),
+                            ->options(Order::pluck('id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('product_id')
+                            ->required()
+                            ->options(Product::all()->pluck('name', 'id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('product_measurement_units_id')
+                            ->required()
+                            ->options(ProductMeasurementUnit::all()
+                            ->pluck('name', 'id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
                         ])
                         ]),
 

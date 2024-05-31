@@ -58,6 +58,29 @@ class OrderResource extends Resource
                             ->required(),
                             
                         ])->columns(2)  
+                            ->options(User::all()
+                            ->pluck('name','id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('address_id')
+                            ->required()
+                            ->options(Address::all()
+                            ->pluck('name','id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Select::make('delivery_id')
+                            ->required()
+                            ->options(User::all()
+                            ->pluck('name','id')
+                            ->toArray())
+                            ->searchable()
+                            ->preload(),
+                            Forms\Components\Textarea::make('note')
+                            ->columnSpanFull()
+                            ->required(),
+                        ])->columns(2)
                         
                         ]),
 
@@ -101,7 +124,20 @@ class OrderResource extends Resource
                                 ->required()
                                 ->numeric()
                                 ->minValue(0),
-                                
+                                Forms\Components\Select::make('status')
+                                ->required()
+                                ->searchable()
+                                ->preload()
+                                ->options(OrderStatusEnum::class),
+                                Forms\Components\Select::make('payment_method')
+                                ->required()
+                                ->options(['Paiement when recieving'=>'Paiement when recieving' , 'Payment via wallet'=>'Payment via wallet'])
+                                ->searchable()
+                                ->preload(),
+                                Forms\Components\TextInput::make('total_price')
+                                ->required()
+                                ->minValue(0),
+                                Forms\Components\DateTimePicker::make('deleted_at'),
                         ])
                         
                         ]),

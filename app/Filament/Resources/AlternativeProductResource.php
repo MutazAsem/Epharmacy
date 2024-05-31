@@ -38,6 +38,15 @@ class AlternativeProductResource extends Resource
                             ->searchable()
                             ->required()
                             ->label('Alternativ product name'),
+                                ->relationship('product_alternativ','name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
+                            Forms\Components\Select::make('alternativ_product_id')
+                                ->relationship('alternativ_product','name')
+                                ->searchable()
+                                ->preload()
+                                ->required(),
                                 ])
 
                     ])->columnSpanFull()
