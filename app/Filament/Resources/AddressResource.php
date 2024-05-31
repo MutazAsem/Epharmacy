@@ -29,18 +29,20 @@ class AddressResource extends Resource
                 ->schema([
                     Forms\Components\Section::make()
                     ->schema([
+                        
                         forms\Components\TextInput::make('name')
-                                ->required()
-                                ->live(onBlur:true),
+                        ->required()
+                        ->live(onBlur:true),
                         
                         forms\Components\TextInput::make('description')
-                                ->required(),
+                        ->required(),
                        
-                        Forms\Components\Select::make('city')->options(CityEnum::class)
-                                ->searchable(),
+                        Forms\Components\Select::make('city')
+                        ->options(CityEnum::class)
+                        ->searchable(),
                         
                         forms\Components\TextInput::make('address_link')
-                                ->required(),
+                        ->required(),
                         
                         forms\Components\Select::make('user_id')
                                 ->relationship('user_address','name')

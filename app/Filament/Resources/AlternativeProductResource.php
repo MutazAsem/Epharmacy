@@ -28,16 +28,16 @@ class AlternativeProductResource extends Resource
                     Forms\Components\Section::make()
                         ->schema([
                             Forms\Components\Select::make('product_id')
-                                ->relationship('product_alternativ','name')
-                                ->searchable()
-                                ->required()
-                                ->label('Product name'),
+                            ->relationship('product_alternativ','name')
+                            ->searchable()
+                            ->required()
+                            ->label('Product name'),
                             
                             Forms\Components\Select::make('alternativ_product_id')
-                                ->relationship('alternativ_product','name')
-                                ->searchable()
-                                ->required()
-                                ->label('Alternativ product name'),
+                            ->relationship('alternativ_product','name')
+                            ->searchable()
+                            ->required()
+                            ->label('Alternativ product name'),
                                 ])
 
                     ])->columnSpanFull()
