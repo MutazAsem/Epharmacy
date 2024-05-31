@@ -32,7 +32,7 @@ class VehicleDetailResource extends Resource
 
                         Forms\Components\Section::make()
 
-                        ->schema([
+                            ->schema([
 
                                     Forms\Components\TextInput::make('plate_number')
                                         ->required()
@@ -50,7 +50,7 @@ class VehicleDetailResource extends Resource
                                         ->required()
                                         ->label('Delivery name')
                                         ->relationship('delivery_vehicle','name'),
-                        ])
+                            ])
 
                         
                         ])->columnSpanFull()
