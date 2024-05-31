@@ -30,14 +30,17 @@ class AlternativeProductResource extends Resource
                             Forms\Components\Select::make('product_id')
                                 ->relationship('product_alternativ','name')
                                 ->searchable()
-                                ->required(),
+                                ->required()
+                                ->label('Product name'),
+                            
                             Forms\Components\Select::make('alternativ_product_id')
                                 ->relationship('alternativ_product','name')
                                 ->searchable()
-                                ->required(),
+                                ->required()
+                                ->label('Alternativ product name'),
                                 ])
 
-                    ])
+                    ])->columnSpanFull()
             ]);
     }
 
@@ -45,17 +48,30 @@ class AlternativeProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product_alternativ.name'),
-                Tables\Columns\TextColumn::make('alternativ_product.name'),
+                
+                Tables\Columns\TextColumn::make('product_alternativ.name')
+                ->label('Product name')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('alternativ_product.name')
+                ->label('Alternativ product name')
+                ->searchable()
+                ->sortable(),
 
-                                ])
+                     ])
+
             ->filters([
-                Tables\Filters\SelectFilter::make('product_id')
+                Tables\Filters\SelectFilter::make('product name')
                 ->relationship('product_alternativ','name')
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+
             ])
             ->bulkActions([
                      Tables\Actions\BulkActionGroup::make([

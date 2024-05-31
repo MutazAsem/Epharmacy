@@ -32,20 +32,24 @@ class AddressResource extends Resource
                         forms\Components\TextInput::make('name')
                                 ->required()
                                 ->live(onBlur:true),
+                        
                         forms\Components\TextInput::make('description')
                                 ->required(),
+                       
                         Forms\Components\Select::make('city')->options(CityEnum::class)
                                 ->searchable(),
+                        
                         forms\Components\TextInput::make('address_link')
                                 ->required(),
+                        
                         forms\Components\Select::make('user_id')
                                 ->relationship('user_address','name')
-                                ->label('user_name')
+                                ->label('Clint name')
                                 ->required()
                                 ->searchable(),
 
                     ])
-                ])
+                ])->columnSpanFull()
 
             ]);
     }
@@ -55,19 +59,37 @@ class AddressResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                        ->label('Address Name'),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('city'),
-                Tables\Columns\TextColumn::make('address_link'),
-                Tables\Columns\TextColumn::make('user_address.name'),
+                ->label('Address Name')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('description')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('city')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('address_link')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('user_address.name')
+                ->label('Clint name')
+                ->searchable()
+                ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('user_id')
+                Tables\Filters\SelectFilter::make('user name')
                       ->relationship('user_address','name'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

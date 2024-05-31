@@ -25,15 +25,21 @@ class ArticleResource extends Resource
     {
         return $form
             ->schema([
+                
                 Forms\Components\Section::make()
                         ->schema([
-                Forms\Components\TextInput::make('title')
+                
+                        Forms\Components\TextInput::make('title')
                         ->required()
                         ->live(onBlur:true),
-                Forms\Components\MarkdownEditor::make('content'),
-                Forms\Components\FileUpload::make('image')
-                        ->image(),
-                Forms\Components\TextInput::make('user_id')
+                
+                        Forms\Components\MarkdownEditor::make('content'),
+                
+                        Forms\Components\FileUpload::make('image')
+                        ->image()
+                        ->imageEditor(),
+                
+                        Forms\Components\TextInput::make('user_id')
                         ->label('User ID')
                         ->hidden(), 
 
@@ -48,19 +54,34 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
+                
                 Tables\Columns\TextColumn::make('title')
-                    ->label('Article title '),
-                Tables\Columns\TextColumn::make('content'),
-                Tables\Columns\ImageColumn::make('image'),
+                ->label('Article title')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('content')
+                ->label('Article content')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\ImageColumn::make('image')
+                ->label('Article image')
+                ->searchable()
+                ->sortable(),
 
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('user_id')
+                Tables\Filters\SelectFilter::make('Article Writer name')
                      ->relationship('writer','name'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+
             ])
             ->bulkActions([
                     Tables\Actions\BulkActionGroup::make([
