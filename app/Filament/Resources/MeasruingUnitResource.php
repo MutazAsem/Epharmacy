@@ -17,13 +17,24 @@ class MeasruingUnitResource extends Resource
 {
     protected static ?string $model = MeasruingUnit::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-scale';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                forms\Components\TextInput::make('name'),
+                Forms\Components\Group::make()
+                    ->schema([
+
+                        Forms\Components\Section::make()
+
+                        ->schema([
+                            forms\Components\TextInput::make('name')
+                            ->required(),
+                        ])
+
+                        
+                        ])->columnSpanFull(),
             ]);
     }
 
@@ -32,15 +43,21 @@ class MeasruingUnitResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Name of measruing unit'),
+                ->label('Name of measruing unit')
+                ->searchable()
+                ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('measurement_units_id')
-                ->relationship('product_unit','name'),
+                // Tables\Filters\SelectFilter::make('measurement_units_id')
+                // ->relationship('product_unit','name'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

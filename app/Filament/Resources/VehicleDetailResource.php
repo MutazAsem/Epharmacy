@@ -20,7 +20,7 @@ class VehicleDetailResource extends Resource
 {
     protected static ?string $model = VehicleDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     public static function form(Form $form): Form
     {
@@ -32,8 +32,12 @@ class VehicleDetailResource extends Resource
 
                         Forms\Components\Section::make()
 
-                        ->schema([
+                            ->schema([
 
+                                Forms\Components\TextInput::make('plate_number')->required()->label('Vehicle plate number')->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)->rules('numeric', 'min:0')->minValue(0)->maxLength(999999),
+                                Forms\Components\Select::make('vehicle_type')->required()->options(['Car'=>'Car','Truck'=>'Truck','Bus'=>'Bus','Taxi'=>'Taxi','Bicycle'=>'Bicycle','Motorcycle'=>'Motorcycle']),
+                                Forms\Components\Select::make('delivery_id')->required()->label('Delivery name')->relationship('delivery_vehicle','name'),
+                            ])
                             Forms\Components\TextInput::make('plate_number')
                             ->required()
                             ->live()
@@ -57,7 +61,7 @@ class VehicleDetailResource extends Resource
                         ])
 
                         
-                        ]),
+                        ])->columnSpanFull()
             ]);
     }
 
@@ -66,11 +70,21 @@ class VehicleDetailResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('plate_number')->searchable()->sortable()->toggleable(),
-                Tables\Columns\TextColumn::make('vehicle_type')->searchable()->sortable()->toggleable(),
-                Tables\Columns\TextColumn::make('delivery_id')->searchable()->sortable()->toggleable(),
-                Tables\Columns\TextColumn::make('created_at')->searchable()->sortable()->toggleable()->date(),
-                Tables\Columns\TextColumn::make('updated_at')->searchable()->sortable()->toggleable()->date(),
+                Tables\Columns\TextColumn::make('plate_number')
+                    ->label('Vehicle plate number')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                
+                Tables\Columns\TextColumn::make('vehicle_type')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                
+                Tables\Columns\TextColumn::make('delivery_id')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
                 //

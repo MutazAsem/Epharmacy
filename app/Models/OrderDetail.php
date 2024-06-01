@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderDetail extends Model
@@ -24,4 +25,6 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(ProductMeasurementUnit::class,'product_measurement_units_id');
     }
+
+
 }

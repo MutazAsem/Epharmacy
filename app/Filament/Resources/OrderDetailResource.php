@@ -36,6 +36,17 @@ class OrderDetailResource extends Resource
                         ->schema([
                             Forms\Components\Select::make('order_id')
                             ->required()
+                            ->relationship('order','id'),
+                            
+                            Forms\Components\Select::make('product_id')
+                            ->required()
+                            ->label('Product name')
+                            ->relationship('order_product_detail','name'),
+                            
+                            Forms\Components\Select::make('product_measurement_units_id')
+                            ->required()
+                            ->label('Name of product measurement units')
+                            ->relationship('order_product_measurement_unit','name'),
                             ->options(Order::pluck('id')
                             ->toArray())
                             ->searchable()
@@ -62,9 +73,17 @@ class OrderDetailResource extends Resource
                     Forms\Components\Section::make()
 
                     ->schema([
-                        Forms\Components\TextInput::make('total_quantity')->required()->minValue(0)->live()->numeric(),
-                        Forms\Components\TextInput::make('total_product_price')->required()->minValue(0)->live()->numeric(),
-                        Forms\Components\DateTimePicker::make('deleted_at')->date(),
+                        Forms\Components\TextInput::make('total_quantity')
+                        ->required()
+                        ->minValue(0)
+                        ->live()
+                        ->numeric(),
+                        
+                        Forms\Components\TextInput::make('total_product_price')
+                        ->required()
+                        ->minValue(0)
+                        ->live()
+                        ->numeric(),
                     ])
                     ]),
             ]);
@@ -75,14 +94,38 @@ class OrderDetailResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('order_id')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('product_id')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('total_quantity')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('product_measurement_units_id')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('total_product_price')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('deleted_at')->date()->searchable()->sortable()->toggleable(),
-                Tables\Columns\TextColumn::make('created_at')->date()->searchable()->sortable()->toggleable(),
-                Tables\Columns\TextColumn::make('updated_at')->date()->searchable()->sortable()->toggleable(),
+                Tables\Columns\TextColumn::make('order_id')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('product_id')
+                ->label('Product name')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('total_quantity')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('product_measurement_units_id')
+                ->label('Name of product measurement units')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('total_product_price')
+                ->searchable()
+                ->sortable(),
+                
+                Tables\Columns\TextColumn::make('created_at')->date()
+                ->searchable()
+                ->sortable()
+                ->toggleable(),
+                
+                Tables\Columns\TextColumn::make('updated_at')->date()
+                ->searchable()
+                ->sortable()
+                ->toggleable(),
+                
             ])
             ->filters([
                 //
