@@ -26,8 +26,5 @@ class OrderDetail extends Model
         return $this->belongsTo(ProductMeasurementUnit::class,'product_measurement_units_id');
     }
 
-    public function order():BelongsTo
-    {
-        return $this->belongsTo(Order::class,'id');
-    }
+
 }
