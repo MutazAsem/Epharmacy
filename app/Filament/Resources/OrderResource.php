@@ -171,11 +171,7 @@ class OrderResource extends Resource
                                 ])->inline()
                                 ->default('New'),
 
-                            // Forms\Components\TextInput::make('total_price')
-                            //     ->required()
-                            //     ->markAsRequired(false)
-                            //     ->live()
-                            //     ->minValue(0),
+
                             Placeholder::make('total_price')
                             ->label('Total Price')
                             ->content(function(Get $get , Set $set){
