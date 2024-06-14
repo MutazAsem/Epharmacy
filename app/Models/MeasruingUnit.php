@@ -18,4 +18,13 @@ class MeasruingUnit extends Model
     {
         return $this->hasMany(ProductMeasurementUnit::class,'measurement_units_id');
     }
+
+    //
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_measurement_units', 'measurement_units_id', 'product_id');
+    }
+    
+    
+
 }

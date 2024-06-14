@@ -26,4 +26,13 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class,'category_id');
     }
+
+    //
+    public function measurementUnits()
+    {
+        return $this->belongsToMany(MeasruingUnit::class, 'product_measurement_units', 'product_id', 'measurement_units_id');
+    }
+    
+    
+
 }

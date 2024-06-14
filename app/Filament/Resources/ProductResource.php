@@ -31,49 +31,49 @@ class ProductResource extends Resource
     {
         return static::getModel()::count();
     }
-    
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Group::make()
-                ->schema([
-                    Forms\Components\Section::make()
-                        ->schema([
-                            Forms\Components\TextInput::make('name'),
-                            Forms\Components\TextInput::make('description'),
-                            Forms\Components\Select::make('made_in')
-                            ->options(CountryEnum::class)
-                            ->searchable()
-                            ->preload(),
-                            Forms\Components\TextInput::make('manufacture_company'), 
-                            Forms\Components\TextInput::make('type'), 
-                            Forms\Components\TextInput::make('effective_material'), 
-                            Forms\Components\TextInput::make('indications'), 
-                        ])
-                ]),
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('name'),
+                                Forms\Components\TextInput::make('description'),
+                                Forms\Components\Select::make('made_in')
+                                    ->options(CountryEnum::class)
+                                    ->searchable()
+                                    ->preload(),
+                                Forms\Components\TextInput::make('manufacture_company'),
+                                Forms\Components\TextInput::make('type'),
+                                Forms\Components\TextInput::make('effective_material'),
+                                Forms\Components\TextInput::make('indications'),
+                            ])
+                    ]),
 
                 Forms\Components\Group::make()
-                ->schema([
-                    Forms\Components\Section::make()
-                        ->schema([
-                            Forms\Components\Select::make('category_id')
-                            ->relationship('product_category','name')
-                            ->searchable()
-                            ->preload(),
-                            Forms\Components\TextInput::make('dosage'),
-                            Forms\Components\TextInput::make('side_effects'),
-                            Forms\Components\TextInput::make('contraindications'),
-                            Forms\Components\TextInput::make('packaging'),
-                            Forms\Components\TextInput::make('storage'),
-                            Forms\Components\Toggle::make('status'),  
-                        ]),
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\Select::make('category_id')
+                                    ->relationship('product_category', 'name')
+                                    ->searchable()
+                                    ->preload(),
+                                Forms\Components\TextInput::make('dosage'),
+                                Forms\Components\TextInput::make('side_effects'),
+                                Forms\Components\TextInput::make('contraindications'),
+                                Forms\Components\TextInput::make('packaging'),
+                                Forms\Components\TextInput::make('storage'),
+                                Forms\Components\Toggle::make('status'),
+                            ]),
 
-                    Forms\Components\Section::make('Image')
-                        ->schema([
-                            Forms\Components\FileUpload::make('image')  
-                        ])->collapsible()
-                ])
+                        Forms\Components\Section::make('Image')
+                            ->schema([
+                                Forms\Components\FileUpload::make('image')
+                            ])->collapsible()
+                    ])
             ]);
     }
 

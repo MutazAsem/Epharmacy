@@ -24,6 +24,24 @@ class UserResource extends Resource
         return $form
             ->schema([
                 //
+
+                // Placeholder::make('total_price')
+                // ->label('Total Price')
+                // ->content(function(Get $get , Set $set){
+                //     $totalPrice = 0 ;
+                //     if (!$repeaters = $get('order_item')){
+                //         return $totalPrice;
+                //     }
+
+                //     foreach($repeaters as $key => $repeater){
+                //         $totalPrice +=  $get("order_item.{$key}.total_product_price");
+                //     }
+                //     $set('total_price', $totalPrice);
+                //     return $totalPrice;
+                // }),
+
+                // Hidden::make('total_price')
+                // ->default(0),
             ]);
     }
 

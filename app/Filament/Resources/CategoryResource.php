@@ -19,7 +19,7 @@ class CategoryResource extends Resource
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    
+
 
     public static function form(Form $form): Form
     {
@@ -30,28 +30,28 @@ class CategoryResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name'),
-                                Forms\Components\TextInput::make('description') 
+                                Forms\Components\TextInput::make('description')
                             ])
-                        ]),
+                    ]),
 
-                    Forms\Components\Group::make()
+                Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Select::make('parent_id')
-                                ->relationship('parent','name')
-                                ->searchable()
-                                ->preload(),
-                                Forms\Components\Toggle::make('status'),  
+                                    ->relationship('parent', 'name')
+                                    ->searchable()
+                                    ->preload(),
+                                Forms\Components\Toggle::make('status'),
                             ])
                     ])
-                
+
             ]);
     }
 
     public static function table(Table $table): Table
     {
-        
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),

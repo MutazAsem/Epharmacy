@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+
 use App\Enums\CityEnum;
 use Filament\Tables\Columns\TextColumn;
 use PhpParser\Node\Expr\Ternary;
@@ -26,36 +27,41 @@ class AddressResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Group::make()
-                ->schema([
-                    Forms\Components\Section::make()
                     ->schema([
-                        
-                        forms\Components\TextInput::make('name')
-                        ->required()
-                        ->live(onBlur:true),
-                        
-                        forms\Components\TextInput::make('description')
-                        ->required(),
-                       
-                        Forms\Components\Select::make('city')
-                        ->options(CityEnum::class)
-                        ->searchable(),
-                                ->required(),
-                        Forms\Components\Select::make('city')->options(CityEnum::class)
-                                ->searchable()
-                                ->preload(),
-                        forms\Components\TextInput::make('address_link')
-                        ->required(),
-                        
-                        forms\Components\Select::make('user_id')
-                                ->relationship('user_address','name')
-                                ->label('Clint name')
-                                ->required()
-                                ->searchable()
-                                ->preload(),
+                        Forms\Components\Section::make()
+                            ->schema([
 
-                    ])
-                ])->columnSpanFull()
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->live(onBlur: true),
+
+                                Forms\Components\TextInput::make('description')
+                                    ->required()
+                                    ->markAsRequired(false),
+
+                                Forms\Components\Select::make('city')
+                                    ->options(CityEnum::class)
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false),
+
+                                Forms\Components\TextInput::make('address_link')
+                                    ->label('Address Link')
+                                    ->required()
+                                    ->markAsRequired(false),
+
+                                Forms\Components\Select::make('user_id')
+                                    ->relationship('user_address', 'name')
+                                    ->label('Clint Name')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->searchable()
+                                    ->preload(),
+
+                            ])
+                    ])->columnSpanFull()
 
             ]);
     }
@@ -65,30 +71,33 @@ class AddressResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->label('Address Name')
-                ->searchable()
-                ->sortable(),
-                
+                    ->label('Address Name')
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('description')
-                ->searchable()
-                ->sortable(),
-                
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('city')
-                ->searchable()
-                ->sortable(),
-                
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('address_link')
-                ->searchable()
-                ->sortable(),
-                
+                    ->label('Address Link')
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('user_address.name')
-                ->label('Clint name')
-                ->searchable()
-                ->sortable(),
+                    ->label('Clint Name')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user name')
-                      ->relationship('user_address','name'),
+                    ->relationship('user_address', 'name'),
+                Tables\Filters\SelectFilter::make('city')
+                    ->options(CityEnum::class),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

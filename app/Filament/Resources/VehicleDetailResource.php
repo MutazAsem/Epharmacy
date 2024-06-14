@@ -34,34 +34,35 @@ class VehicleDetailResource extends Resource
 
                             ->schema([
 
-                                Forms\Components\TextInput::make('plate_number')->required()->label('Vehicle plate number')->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)->rules('numeric', 'min:0')->minValue(0)->maxLength(999999),
-                                Forms\Components\Select::make('vehicle_type')->required()->options(['Car'=>'Car','Truck'=>'Truck','Bus'=>'Bus','Taxi'=>'Taxi','Bicycle'=>'Bicycle','Motorcycle'=>'Motorcycle']),
-                                Forms\Components\Select::make('delivery_id')->required()->label('Delivery name')->relationship('delivery_vehicle','name'),
-                            ])
-                            Forms\Components\TextInput::make('plate_number')
-                            ->required()
-                            ->live()
-                            ->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)
-                            ->rules('numeric', 'min:0')
-                            ->minValue(0)
-                            ->maxLength(999999),
-                            Forms\Components\Select::make('vehicle_type')
-                            ->unique(VehicleDetail::class,'plate_number',ignoreRecord:true)
-                            ->required()
-                            ->options(['Car'=>'Car','Truck'=>'Truck','Bus'=>'Bus','Taxi'=>'Taxi','Bicycle'=>'Bicycle','Motorcycle'=>'Motorcycle'])
-                            ->searchable()
-                            ->preload(),
-                            Forms\Components\Select::make('delivery_id')
-                            ->required()
-                            ->options(User::all()
-                            ->pluck('name', 'id')
-                            ->toArray())
-                            ->searchable()
-                            ->preload(),
-                        ])
 
-                        
-                        ])->columnSpanFull()
+
+                                Forms\Components\TextInput::make('plate_number')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->live()
+                                    ->unique(VehicleDetail::class, 'plate_number', ignoreRecord: true)
+                                    ->rules('numeric', 'min:0')
+                                    ->minValue(0)
+                                    ->maxLength(999999),
+                                Forms\Components\Select::make('vehicle_type')
+                                    ->unique(VehicleDetail::class, 'plate_number', ignoreRecord: true)
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->options(['Car' => 'Car', 'Truck' => 'Truck', 'Bus' => 'Bus', 'Taxi' => 'Taxi', 'Bicycle' => 'Bicycle', 'Motorcycle' => 'Motorcycle'])
+                                    ->searchable()
+                                    ->preload(),
+                                Forms\Components\Select::make('delivery_id')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->options(User::all()
+                                        ->pluck('name', 'id')
+                                        ->toArray())
+                                    ->searchable()
+                                    ->preload(),
+                            ])
+
+
+                    ])->columnSpanFull()
             ]);
     }
 
@@ -75,12 +76,12 @@ class VehicleDetailResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                
+
                 Tables\Columns\TextColumn::make('vehicle_type')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                
+
                 Tables\Columns\TextColumn::make('delivery_id')
                     ->searchable()
                     ->sortable()
@@ -89,7 +90,7 @@ class VehicleDetailResource extends Resource
             ->filters([
                 //
                 Tables\Filters\SelectFilter::make('delivery vehicle name')
-                ->relationship('delivery_vehicle' , 'name'),
+                    ->relationship('delivery_vehicle', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

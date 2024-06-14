@@ -4,6 +4,10 @@
             <x-authentication-card-logo />
         </x-slot>
 
+        <div style="font-size: 24px; font-weight: bold; margin-top: 10px; text-align: center; color: #ffffff;">
+            {{ ucfirst(config('app.name', 'Your Site Name')) }}
+        </div>
+
         <x-validation-errors class="mb-4" />
 
         <form method="POST" action="{{ route('register') }}">

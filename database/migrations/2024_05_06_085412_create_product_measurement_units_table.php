@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::create('product_measurement_units', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('measurement_units_id');
             $table->unsignedBigInteger('product_id');
-            $table->decimal('quantity',10,2);
+            $table->string('quantity');
             $table->decimal('price',10,2);
             $table->timestamps();
             $table->foreign('measurement_units_id')->references('id')->on('measruing_units');
