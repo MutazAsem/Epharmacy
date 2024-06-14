@@ -24,24 +24,18 @@ class UserResource extends Resource
         return $form
             ->schema([
                 //
+                //                 Forms\Components\Select::make('roles')
+                //     ->relationship('roles', 'name')
+                //     ->multiple()
+                //     ->preload()
+                //     ->searchable()
 
-                // Placeholder::make('total_price')
-                // ->label('Total Price')
-                // ->content(function(Get $get , Set $set){
-                //     $totalPrice = 0 ;
-                //     if (!$repeaters = $get('order_item')){
-                //         return $totalPrice;
-                //     }
+                // // Using CheckboxList Component
+                // Forms\Components\CheckboxList::make('roles')
+                //     ->relationship('roles', 'name')
+                //     ->searchable()
 
-                //     foreach($repeaters as $key => $repeater){
-                //         $totalPrice +=  $get("order_item.{$key}.total_product_price");
-                //     }
-                //     $set('total_price', $totalPrice);
-                //     return $totalPrice;
-                // }),
 
-                // Hidden::make('total_price')
-                // ->default(0),
             ]);
     }
 
@@ -50,6 +44,18 @@ class UserResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\ImageColumn::make('profile_photo_path'),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('last_name'),
+                Tables\Columns\TextColumn::make('email'),
+                Tables\Columns\TextColumn::make('mobile'),
+                Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime(),
+
+
+
             ])
             ->filters([
                 //
