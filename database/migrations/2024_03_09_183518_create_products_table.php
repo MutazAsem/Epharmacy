@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->unsignedBigInteger('category_id');
             $table->enum('made_in', [$countries = config('countries.countries')]);
-            $table->string('image')->default('product_default.png');
+            $table->string('image')->nullable();
             $table->string('manufacture_company');
             $table->string('type')->nullable();
             $table->string('effective_material')->nullable();

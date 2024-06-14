@@ -25,55 +25,58 @@ class ArticleResource extends Resource
     {
         return $form
             ->schema([
-                
+
                 Forms\Components\Section::make()
-                        ->schema([
-                
+                    ->schema([
+
                         Forms\Components\TextInput::make('title')
-                        ->required()
-                        ->live(onBlur:true),
-                
-                        Forms\Components\MarkdownEditor::make('content'),
-                
+                            ->required()
+                                    ->markAsRequired(false)
+                            ->live(onBlur: true),
+
+                        Forms\Components\MarkdownEditor::make('content')
+                            ->required()
+                                    ->markAsRequired(false),
+
                         Forms\Components\FileUpload::make('image')
-                        ->image()
-                        ->imageEditor(),
-                
+                            ->image()
+                            ->imageEditor(),
+
                         Forms\Components\TextInput::make('user_id')
-                        ->label('User ID')
-                        ->hidden(), 
+                            ->label('User ID')
+                            ->hidden(),
 
 
-                                    ]),
+                    ]),
 
-                    ]);
-           
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                
+
                 Tables\Columns\TextColumn::make('title')
-                ->label('Article title')
-                ->searchable()
-                ->sortable(),
-                
-                Tables\Columns\TextColumn::make('content')
-                ->label('Article content')
-                ->searchable()
-                ->sortable(),
-                
+                    ->label('Article Title')
+                    ->searchable()
+                    ->sortable(),
+
+
                 Tables\Columns\ImageColumn::make('image')
-                ->label('Article image')
-                ->searchable()
-                ->sortable(),
+                    ->label('Article Image')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('writer.name')
+                    ->label('Writer')
+                    ->searchable()
+                    ->sortable(),
 
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('Article Writer name')
-                     ->relationship('writer','name'),
+                Tables\Filters\SelectFilter::make('Article Writer Name')
+                    ->relationship('writer', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -84,7 +87,7 @@ class ArticleResource extends Resource
 
             ])
             ->bulkActions([
-                    Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

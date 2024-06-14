@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::create('order_details', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('product_id');
-            $table->decimal('total_quantity',10,2);
-            $table->unsignedBigInteger('product_measurement_units_id');
+            $table->decimal('quantity',10,2)->default(1);
+            $table->unsignedBigInteger('measurement_units_id');
+            $table->decimal('unit_price',10,2);
             $table->decimal('total_product_price',10,2);
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('product_measurement_units_id')->references('id')->on('product_measurement_units');
+            $table->foreign('measurement_units_id')->references('id')->on('measruing_units');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('order_items');
     }
 };

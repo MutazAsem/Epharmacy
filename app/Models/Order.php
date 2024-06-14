@@ -23,7 +23,7 @@ class Order extends Model
         'status' => OrderStatusEnum::class,
     ];
 
-    public function user_order ():BelongsTo
+    public function client_order ():BelongsTo
     {
         return $this->belongsTo(User::class,'client_id');
     }
@@ -33,14 +33,16 @@ class Order extends Model
         return $this->belongsTo(User::class,'delivery_id');
     }
 
-    public function order_detail ():HasMany
-    {
-        return $this->hasMany(OrderDetail::class,'order_id');
-    }
+
 
     public function order_address ():BelongsTo
     {
         return $this->belongsTo(Address::class,'address_id');
+    }
+
+    public function order_item ():HasMany
+    {
+        return $this->hasMany(OrderItem::class,'order_id');
     }
     
 }

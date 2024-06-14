@@ -12,11 +12,18 @@ class ProductMeasurementUnit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','measurement_units_id','product_id','quantity','price',
+        'measurement_units_id','product_id','quantity','price',
     ];
 
-    public function product_measuremen ():BelongsToMany
+    public function product_measuremen ():BelongsTo
     {
-        return $this->belongsToMany(Product::class,'product_id');
+        return $this->belongsTo(Product::class,'product_id');
     }
+
+    public function product_unit ():BelongsTo
+    {
+        return $this->BelongsTo(MeasruingUnit::class,'measurement_units_id');
+    }
+
+    
 }

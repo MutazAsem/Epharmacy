@@ -32,61 +32,36 @@ class ProductMeasurementUnitResource extends Resource
 
                         Forms\Components\Section::make()
 
-                        ->schema([
-
-                            Forms\Components\TextInput::make('name')
-                            ->required(),
-                            
-                            Forms\Components\TextInput::make('quantity')
-                            ->required()
-                            ->numeric()
-                            ->minValue(0),
-                            
-                            Forms\Components\TextInput::make('price')
-                            ->required()
-                            ->numeric()
-                            ->minValue(0),
-                            
-
-                            Grid::make(2)
                             ->schema([
-                                Forms\Components\Select::make('measurement_units_id')
-                                ->required()
-                                ->relationship('product_measuremen','name')
-                                ->hidden(),
-                                
+
                                 Forms\Components\Select::make('product_id')
-                                ->required()
-                                ->relationship('product_measuremen','name')
-                                ->hidden(),
-                            ])
-                        ])
-                        ])->columnSpanFull(),
-                        ]),
+                                    ->required()
+                                    ->label('Product Name')
+                                    ->markAsRequired(false)
+                                    ->relationship('product_measuremen', 'name'),
 
-                 Forms\Components\Group::make()
-                     ->schema([
+                                Forms\Components\Select::make('measurement_units_id')
+                                    ->required()
+                                    ->label('Measurement Unit Name')
+                                    ->markAsRequired(false)
+                                    ->relationship('product_unit', 'name'),
 
-                        Forms\Components\Section::make()
+                                Forms\Components\TextInput::make('quantity')
+                                    ->required()
+                                    ->markAsRequired(false),
 
-                        ->schema([
+                                Forms\Components\TextInput::make('price')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->numeric()
+                                    ->minValue(0),
 
-                            Forms\Components\Select::make('measurement_units_id')
-                            ->required()
-                            ->options(MeasruingUnit::all()
-                            ->pluck('name','id')
-                            ->toArray())
-                            ->searchable()
-                            ->preload(),
-                            Forms\Components\Select::make('product_id')
-                            ->required()->options(Product::all()
-                            ->pluck('name', 'id')
-                            ->toArray())
-                            ->searchable()
-                            ->preload(),
-                        ])->columns(2)
-                        
-                        ]),
+
+
+
+
+                            ])->columns(2)
+                    ])->columnSpanFull(),
             ]);
     }
 
@@ -95,35 +70,34 @@ class ProductMeasurementUnitResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('name')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
-                
-                Tables\Columns\TextColumn::make('measurement_units_id')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
-                
-                Tables\Columns\TextColumn::make('product_id')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
-                
+                Tables\Columns\TextColumn::make('product_measuremen.name')
+                    ->label('Product Name')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('product_unit.name')
+                    ->label('Measurement Unit Name')
+                    ->searchable()
+                    ->sortable(),
+
+
+
                 Tables\Columns\TextColumn::make('quantity')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
-                
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('price')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
+                    ->searchable()
+                    ->sortable(),
+
             ])
             ->filters([
                 //
-                //  Tables\Filters\SelectFilter::make('product measuremen')
-                //  ->relationship('product_measuremen' , 'name')  
+                Tables\Filters\SelectFilter::make('Product Name')
+                ->relationship('product_measuremen' , 'name') ,
+                 Tables\Filters\SelectFilter::make('Measurement Unit')
+                 ->relationship('product_unit' , 'name'),
+   
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

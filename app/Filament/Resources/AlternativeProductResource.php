@@ -24,30 +24,25 @@ class AlternativeProductResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Group::make()
-                ->schema([
-                    Forms\Components\Section::make()
-                        ->schema([
-                            Forms\Components\Select::make('product_id')
-                            ->relationship('product_alternativ','name')
-                            ->searchable()
-                            ->required()
-                            ->label('Product name'),
-                            
-                            Forms\Components\Select::make('alternativ_product_id')
-                            ->relationship('alternativ_product','name')
-                            ->searchable()
-                            ->required()
-                            ->label('Alternativ product name'),
-                                ->relationship('product_alternativ','name')
-                                ->searchable()
-                                ->preload()
-                                ->required(),
-                            Forms\Components\Select::make('alternativ_product_id')
-                                ->relationship('alternativ_product','name')
-                                ->searchable()
-                                ->preload()
-                                ->required(),
-                                ])
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\Select::make('product_id')
+                                    ->relationship('product_alternativ', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->label('Product name'),
+
+                                Forms\Components\Select::make('alternativ_product_id')
+                                    ->relationship('alternativ_product', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->label('Alternativ Product Name'),
+                            ])
 
                     ])->columnSpanFull()
             ]);
@@ -57,22 +52,24 @@ class AlternativeProductResource extends Resource
     {
         return $table
             ->columns([
-                
-                Tables\Columns\TextColumn::make('product_alternativ.name')
-                ->label('Product name')
-                ->searchable()
-                ->sortable(),
-                
-                Tables\Columns\TextColumn::make('alternativ_product.name')
-                ->label('Alternativ product name')
-                ->searchable()
-                ->sortable(),
 
-                     ])
+                Tables\Columns\TextColumn::make('product_alternativ.name')
+                    ->label('Product Name')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('alternativ_product.name')
+                    ->label('Alternativ Product Name')
+                    ->searchable()
+                    ->sortable(),
+
+            ])
 
             ->filters([
-                Tables\Filters\SelectFilter::make('product name')
-                ->relationship('product_alternativ','name')
+                Tables\Filters\SelectFilter::make('Product Name')
+                    ->relationship('product_alternativ', 'name'),
+                Tables\Filters\SelectFilter::make('Alternativ product Name')
+                    ->relationship('alternativ_product', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -83,7 +80,7 @@ class AlternativeProductResource extends Resource
 
             ])
             ->bulkActions([
-                     Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

@@ -28,13 +28,15 @@ class MeasruingUnitResource extends Resource
 
                         Forms\Components\Section::make()
 
-                        ->schema([
-                            forms\Components\TextInput::make('name')
-                            ->required(),
-                        ])
+                            ->schema([
+                                forms\Components\TextInput::make('name')
+                                    ->label('Measruing Unit Name')
+                                    ->required()
+                                    ->markAsRequired(false),
+                            ])
 
-                        
-                        ])->columnSpanFull(),
+
+                    ])->columnSpanFull(),
             ]);
     }
 
@@ -43,13 +45,12 @@ class MeasruingUnitResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->label('Name of measruing unit')
-                ->searchable()
-                ->sortable(),
+                    ->label('Measruing Unit Name')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
-                // Tables\Filters\SelectFilter::make('measurement_units_id')
-                // ->relationship('product_unit','name'),
+                //
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
