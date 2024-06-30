@@ -19,22 +19,98 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?string $navigationGroup = 'Manage';
+
+    protected static ?int $navigationSort = 0;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email', 'last_name', 'mobile'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
+
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
-                //
-                //                 Forms\Components\Select::make('roles')
-                //     ->relationship('roles', 'name')
-                //     ->multiple()
-                //     ->preload()
-                //     ->searchable()
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->label('First Name')
+                                    ->required()
+                                    ->markAsRequired(false),
+                                Forms\Components\TextInput::make('last_name')
+                                    ->label('Last Name')
+                                    ->required()
+                                    ->markAsRequired(false),
+                                Forms\Components\TextInput::make('email')
+                                    ->label('Email')
+                                    ->email()
+                                    ->autocomplete(false)
+                                    ->unique(ignoreRecord: true)
+                                    ->unique(User::class, 'email', ignoreRecord: true)
+                                    ->required()
+                                    ->markAsRequired(false),
+                                Forms\Components\Select::make('gender')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->options(['Male' => 'Male', 'Female' => 'Female']),
+                                Forms\Components\TextInput::make('mobile')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->maxLength(9)
+                                    ->minLength(9)
+                                    ->step(9)
+                                    ->tel()
+                                    ->prefix('+967'),
+                            ])
+                    ]),
 
-                // // Using CheckboxList Component
-                // Forms\Components\CheckboxList::make('roles')
-                //     ->relationship('roles', 'name')
-                //     ->searchable()
-
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make()
+                            ->schema([
+                                Forms\Components\Toggle::make('status')
+                                    ->default(true),
+                                Forms\Components\TextInput::make('password')
+                                    ->password()
+                                    ->dehydrateStateUsing(fn ($state) => bcrypt($state))
+                                    ->revealable()
+                                    ->autocomplete(false)
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->confirmed()
+                                    ->visibleOn('create'),
+                                Forms\Components\TextInput::make('password_confirmation')
+                                    ->password()
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->revealable()
+                                    ->autocomplete(false)
+                                    ->same('password')
+                                    ->label('Confirm Password')
+                                    ->visibleOn('create'),
+                                //
+                                Forms\Components\Select::make('roles')
+                                    ->relationship('roles', 'name')
+                                    ->multiple()
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->searchable(),
+                            ])
+                    ])
 
             ]);
     }
@@ -53,15 +129,17 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime(),
-
-
-
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
