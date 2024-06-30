@@ -29,6 +29,19 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 0;
+
+    protected static ?string $recordTitleAttribute = 'id';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['id', 'total_price', 'client_order.name'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
@@ -84,7 +97,7 @@ class OrderResource extends Resource
                                                 if ($productMeasurementUnit) {
                                                     $unitPrice = $productMeasurementUnit->price;
                                                     $set('unit_price', $unitPrice);
-                                    
+
                                                     // احصل على الكمية الحالية أو الافتراضية 1
                                                     $quantity = $get('quantity') ?? 1;
                                                     $set('total_product_price', $unitPrice * $quantity);
@@ -143,7 +156,7 @@ class OrderResource extends Resource
                                     ->pluck('name', 'id'))
                                 ->disabled(fn (Forms\Get $get): bool => !filled($get('client_id')))
                                 ->required()
-                                ->markAsRequired(false)->markAsRequired(false)
+                                ->markAsRequired(false)
                                 ->label('Address name'),
 
 
@@ -165,30 +178,31 @@ class OrderResource extends Resource
                                 ->colors([
                                     'New' => 'info',
                                     'Processing' => 'warning',
-                                    'Shipped' => 'success',
+                                    'Shipped' => 'warning',
                                     'Delivered' => 'success',
                                     'Cancelled' => 'danger',
-                                ])->inline()
+                                ])
+                                ->inline()
                                 ->default('New'),
 
 
                             Placeholder::make('total_price')
-                            ->label('Total Price')
-                            ->content(function(Get $get , Set $set){
-                                $totalPrice = 0 ;
-                                if (!$repeaters = $get('order_item')){
+                                ->label('Total Price')
+                                ->content(function (Get $get, Set $set) {
+                                    $totalPrice = 0;
+                                    if (!$repeaters = $get('order_item')) {
+                                        return $totalPrice;
+                                    }
+
+                                    foreach ($repeaters as $key => $repeater) {
+                                        $totalPrice +=  $get("order_item.{$key}.total_product_price");
+                                    }
+                                    $set('total_price', $totalPrice);
                                     return $totalPrice;
-                                }
-            
-                                foreach($repeaters as $key => $repeater){
-                                    $totalPrice +=  $get("order_item.{$key}.total_product_price");
-                                }
-                                $set('total_price', $totalPrice);
-                                return $totalPrice;
-                            }),
-            
+                                }),
+
                             Hidden::make('total_price')
-                            ->default(0),
+                                ->default(0),
 
                             Forms\Components\ToggleButtons::make('payment_method')
                                 ->required()
@@ -223,6 +237,10 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 //
+                Tables\Columns\TextColumn::make('id')
+                    ->label('Order ID')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('client_order.name')
                     ->label('Client Name')
                     ->searchable()
@@ -234,6 +252,21 @@ class OrderResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->selectablePlaceholder(false),
+                // ->badge()
+                // ->color(fn (OrderStatusEnum $state): string => match ($state->value) {
+                //     'New' => 'info',
+                //     'Processing' => 'warning',
+                //     'Shipped' => 'warning',
+                //     'Delivered' => 'success',
+                //     'Cancelled' => 'danger',
+                // })
+                // ->icon(fn (OrderStatusEnum $state): string => match ($state->value) {
+                //     'New' => 'heroicon-o-sparkles',
+                //     'Processing' => 'heroicon-o-arrow-path',
+                //     'Shipped' => 'heroicon-o-truck',
+                //     'Delivered' => 'heroicon-o-check-circle',
+                //     'Cancelled' => 'heroicon-o-x-circle',
+                // }),
 
                 Tables\Columns\TextColumn::make('payment_method')
                     ->searchable()
@@ -242,11 +275,13 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('order_address.name')
                     ->searchable()
                     ->label('Address name')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('total_price')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->money('USD'),
 
                 Tables\Columns\TextColumn::make('order_delivery.name')
                     ->searchable()
@@ -256,13 +291,13 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('note')
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
@@ -278,8 +313,6 @@ class OrderResource extends Resource
                 Tables\Filters\SelectFilter::make('delivery name')
                     ->relationship('order_delivery', 'name'),
 
-                Tables\Filters\SelectFilter::make('address name')
-                    ->relationship('order_address', 'name'),
 
             ])
             ->actions([

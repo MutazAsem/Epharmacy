@@ -21,6 +21,19 @@ class ArticleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
+    protected static ?string $navigationGroup = 'Manage';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'title';
+
+    protected static int $globalSearchResultsLimit = 5;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -31,15 +44,16 @@ class ArticleResource extends Resource
 
                         Forms\Components\TextInput::make('title')
                             ->required()
-                                    ->markAsRequired(false)
+                            ->markAsRequired(false)
                             ->live(onBlur: true),
 
                         Forms\Components\MarkdownEditor::make('content')
                             ->required()
-                                    ->markAsRequired(false),
+                            ->markAsRequired(false),
 
                         Forms\Components\FileUpload::make('image')
                             ->image()
+                            ->directory('articles_images')
                             ->imageEditor(),
 
                         Forms\Components\TextInput::make('user_id')

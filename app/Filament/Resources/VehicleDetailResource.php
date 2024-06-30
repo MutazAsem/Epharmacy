@@ -22,6 +22,19 @@ class VehicleDetailResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
+    protected static ?string $navigationGroup = 'Manage';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $recordTitleAttribute = 'plate_number';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['plate_number','vehicle_type','delivery_vehicle.delivery_id'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -54,9 +67,7 @@ class VehicleDetailResource extends Resource
                                 Forms\Components\Select::make('delivery_id')
                                     ->required()
                                     ->markAsRequired(false)
-                                    ->options(User::all()
-                                        ->pluck('name', 'id')
-                                        ->toArray())
+                                    ->relationship('delivery_vehicle', 'name')
                                     ->searchable()
                                     ->preload(),
                             ])
@@ -82,7 +93,7 @@ class VehicleDetailResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
-                Tables\Columns\TextColumn::make('delivery_id')
+                Tables\Columns\TextColumn::make('delivery_vehicle.delivery_id')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),

@@ -8,6 +8,7 @@ use PhpParser\Node\Expr\Ternary;
 use App\Filament\Resources\AddressResource\Pages;
 use App\Filament\Resources\AddressResource\RelationManagers;
 use App\Models\Address;
+use Doctrine\DBAL\Schema\View;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,12 +16,26 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\View as FormsView;
 
 class AddressResource extends Resource
 {
     protected static ?string $model = Address::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 5;
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description', 'city', 'address_link'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
 
     public static function form(Form $form): Form
     {
@@ -30,6 +45,18 @@ class AddressResource extends Resource
                     ->schema([
                         Forms\Components\Section::make()
                             ->schema([
+
+                                Forms\Components\TextInput::make('address_link')
+                                    ->label('Address Link')
+                                    ->suffixIcon('heroicon-m-globe-alt')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->extraInputAttributes([
+                                        'id' => 'location-input'
+                                    ])
+                                    ->reactive(),
+
+                                FormsView::make('components.google-map'),
 
                                 Forms\Components\TextInput::make('name')
                                     ->required()
@@ -46,12 +73,6 @@ class AddressResource extends Resource
                                     ->preload()
                                     ->required()
                                     ->markAsRequired(false),
-
-                                Forms\Components\TextInput::make('address_link')
-                                    ->label('Address Link')
-                                    ->required()
-                                    ->markAsRequired(false),
-
                                 Forms\Components\Select::make('user_id')
                                     ->relationship('user_address', 'name')
                                     ->label('Clint Name')
@@ -59,6 +80,8 @@ class AddressResource extends Resource
                                     ->markAsRequired(false)
                                     ->searchable()
                                     ->preload(),
+
+
 
                             ])
                     ])->columnSpanFull()

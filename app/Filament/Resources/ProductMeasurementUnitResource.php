@@ -22,6 +22,19 @@ class ProductMeasurementUnitResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
 
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'price';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['quantity', 'price'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -94,10 +107,10 @@ class ProductMeasurementUnitResource extends Resource
             ->filters([
                 //
                 Tables\Filters\SelectFilter::make('Product Name')
-                ->relationship('product_measuremen' , 'name') ,
-                 Tables\Filters\SelectFilter::make('Measurement Unit')
-                 ->relationship('product_unit' , 'name'),
-   
+                    ->relationship('product_measuremen', 'name'),
+                Tables\Filters\SelectFilter::make('Measurement Unit')
+                    ->relationship('product_unit', 'name'),
+
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

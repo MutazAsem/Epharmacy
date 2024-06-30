@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail// , FilamentUser
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
-    // use HasPanelShield;
+    use HasPanelShield;
 
     /**
      * The attributes that are mass assignable.

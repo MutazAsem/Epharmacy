@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\CountryEnum;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Filament\Resources\ProductResource\RelationManagers\ProductMeasuremenRelationManager;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -27,10 +28,23 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?int $navigationSort = 1;
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
     }
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'description', 'manufacture_company', 'effective_material'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
 
     public static function form(Form $form): Form
     {
@@ -72,6 +86,8 @@ class ProductResource extends Resource
                         Forms\Components\Section::make('Image')
                             ->schema([
                                 Forms\Components\FileUpload::make('image')
+                                    ->directory('products_images')
+                                    ->imageEditor(),
                             ])->collapsible()
                     ])
             ]);
@@ -105,7 +121,12 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -118,6 +139,7 @@ class ProductResource extends Resource
     {
         return [
             //
+            ProductMeasuremenRelationManager::class
         ];
     }
 
