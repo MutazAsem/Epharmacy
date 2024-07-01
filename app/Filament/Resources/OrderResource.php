@@ -164,7 +164,9 @@ class OrderResource extends Resource
                             Forms\Components\Select::make('delivery_id')
                                 ->required()
                                 ->markAsRequired(false)->label('Delivery name')
-                                ->relationship('order_delivery', 'name'),
+                                ->options(User::whereHas('roles', function ($query) {
+                                    $query->where('name', 'delivery');
+                                })->pluck('name', 'id')),
                             Forms\Components\ToggleButtons::make('status')
                                 ->required()
                                 ->markAsRequired(false)->options(OrderStatusEnum::class)

@@ -120,15 +120,21 @@ class UserResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\ImageColumn::make('profile_photo_path'),
+
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('last_name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('mobile'),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Role'),
                 Tables\Columns\TextColumn::make('gender'),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ImageColumn::make('profile_photo_path')
+                    ->label('Uesr Profile'),
+
             ])
             ->filters([
                 //
