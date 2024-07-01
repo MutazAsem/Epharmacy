@@ -58,31 +58,9 @@ class UserResource extends Resource
                                     ->label('Email')
                                     ->email()
                                     ->autocomplete(false)
-                                    ->unique(ignoreRecord: true)
                                     ->unique(User::class, 'email', ignoreRecord: true)
                                     ->required()
                                     ->markAsRequired(false),
-                                Forms\Components\Select::make('gender')
-                                    ->required()
-                                    ->markAsRequired(false)
-                                    ->options(['Male' => 'Male', 'Female' => 'Female']),
-                                Forms\Components\TextInput::make('mobile')
-                                    ->required()
-                                    ->markAsRequired(false)
-                                    ->maxLength(9)
-                                    ->minLength(9)
-                                    ->step(9)
-                                    ->tel()
-                                    ->prefix('+967'),
-                            ])
-                    ]),
-
-                Forms\Components\Group::make()
-                    ->schema([
-                        Forms\Components\Section::make()
-                            ->schema([
-                                Forms\Components\Toggle::make('status')
-                                    ->default(true),
                                 Forms\Components\TextInput::make('password')
                                     ->password()
                                     ->dehydrateStateUsing(fn ($state) => bcrypt($state))
@@ -92,6 +70,10 @@ class UserResource extends Resource
                                     ->markAsRequired(false)
                                     ->confirmed()
                                     ->visibleOn('create'),
+                                Forms\Components\Select::make('gender')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->options(['Male' => 'Male', 'Female' => 'Female']),
                                 Forms\Components\TextInput::make('password_confirmation')
                                     ->password()
                                     ->required()
@@ -101,7 +83,14 @@ class UserResource extends Resource
                                     ->same('password')
                                     ->label('Confirm Password')
                                     ->visibleOn('create'),
-                                //
+                                Forms\Components\TextInput::make('mobile')
+                                    ->required()
+                                    ->markAsRequired(false)
+                                    ->maxLength(9)
+                                    ->minLength(9)
+                                    ->step(9)
+                                    ->tel()
+                                    ->prefix('+967'),
                                 Forms\Components\Select::make('roles')
                                     ->relationship('roles', 'name')
                                     ->multiple()
@@ -109,9 +98,10 @@ class UserResource extends Resource
                                     ->required()
                                     ->markAsRequired(false)
                                     ->searchable(),
-                            ])
-                    ])
-
+                                Forms\Components\Toggle::make('status')
+                                    ->default(true),
+                            ])->columns(2)
+                    ])->columnSpanFull()
             ]);
     }
 
@@ -120,28 +110,43 @@ class UserResource extends Resource
         return $table
             ->columns([
                 //
-
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('last_name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('mobile'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('last_name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('mobile')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('roles.name')
-                    ->label('Role'),
-                Tables\Columns\TextColumn::make('gender'),
-                Tables\Columns\TextColumn::make('status'),
+                    ->label('Role')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('gender')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('status')->boolean()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('profile_photo_path')
-                    ->label('Uesr Profile'),
-
+                    ->label('Uesr Profile')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('Role Name')
+                    ->relationship('roles', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),

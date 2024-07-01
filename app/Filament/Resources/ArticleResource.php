@@ -41,28 +41,21 @@ class ArticleResource extends Resource
 
                 Forms\Components\Section::make()
                     ->schema([
-
                         Forms\Components\TextInput::make('title')
                             ->required()
                             ->markAsRequired(false)
                             ->live(onBlur: true),
-
                         Forms\Components\MarkdownEditor::make('content')
                             ->required()
                             ->markAsRequired(false),
-
                         Forms\Components\FileUpload::make('image')
                             ->image()
                             ->directory('articles_images')
                             ->imageEditor(),
-
                         Forms\Components\TextInput::make('user_id')
                             ->label('User ID')
                             ->hidden(),
-
-
                     ]),
-
             ]);
     }
 
@@ -70,23 +63,18 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-
                 Tables\Columns\TextColumn::make('title')
                     ->label('Article Title')
                     ->searchable()
                     ->sortable(),
-
-
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Article Image')
-                    ->searchable()
-                    ->sortable(),
-
                 Tables\Columns\TextColumn::make('writer.name')
                     ->label('Writer')
                     ->searchable()
                     ->sortable(),
-
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Article Image')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('Article Writer Name')

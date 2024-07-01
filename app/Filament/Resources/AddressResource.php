@@ -45,7 +45,6 @@ class AddressResource extends Resource
                     ->schema([
                         Forms\Components\Section::make()
                             ->schema([
-
                                 Forms\Components\TextInput::make('address_link')
                                     ->label('Address Link')
                                     ->suffixIcon('heroicon-m-globe-alt')
@@ -55,24 +54,11 @@ class AddressResource extends Resource
                                         'id' => 'location-input'
                                     ])
                                     ->reactive(),
-
                                 FormsView::make('components.google-map'),
-
                                 Forms\Components\TextInput::make('name')
                                     ->required()
                                     ->markAsRequired(false)
                                     ->live(onBlur: true),
-
-                                Forms\Components\TextInput::make('description')
-                                    ->required()
-                                    ->markAsRequired(false),
-
-                                Forms\Components\Select::make('city')
-                                    ->options(CityEnum::class)
-                                    ->searchable()
-                                    ->preload()
-                                    ->required()
-                                    ->markAsRequired(false),
                                 Forms\Components\Select::make('user_id')
                                     ->relationship('user_address', 'name')
                                     ->label('Clint Name')
@@ -80,9 +66,15 @@ class AddressResource extends Resource
                                     ->markAsRequired(false)
                                     ->searchable()
                                     ->preload(),
-
-
-
+                                Forms\Components\Select::make('city')
+                                    ->options(CityEnum::class)
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false),
+                                Forms\Components\Textarea::make('description')
+                                    ->required()
+                                    ->markAsRequired(false),
                             ])
                     ])->columnSpanFull()
 
@@ -93,26 +85,22 @@ class AddressResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('user_address.name')
+                    ->label('Clint Name')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Address Name')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('description')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('city')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('address_link')
                     ->label('Address Link')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('user_address.name')
-                    ->label('Clint Name')
                     ->searchable()
                     ->sortable(),
             ])

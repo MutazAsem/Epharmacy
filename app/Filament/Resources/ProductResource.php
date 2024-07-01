@@ -15,8 +15,10 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 
@@ -50,12 +52,12 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Group::make()
-                    ->schema([
-                        Forms\Components\Section::make()
+                Tabs::make('Tabs')
+                    ->tabs([
+                        Tabs\Tab::make('Basic Information')
+                            ->icon('heroicon-m-inbox-arrow-down')
                             ->schema([
                                 Forms\Components\TextInput::make('name'),
-                                Forms\Components\TextInput::make('description'),
                                 Forms\Components\Select::make('made_in')
                                     ->options(CountryEnum::class)
                                     ->searchable()
@@ -63,33 +65,30 @@ class ProductResource extends Resource
                                 Forms\Components\TextInput::make('manufacture_company'),
                                 Forms\Components\TextInput::make('type'),
                                 Forms\Components\TextInput::make('effective_material'),
-                                Forms\Components\TextInput::make('indications'),
-                            ])
-                    ]),
-
-                Forms\Components\Group::make()
-                    ->schema([
-                        Forms\Components\Section::make()
-                            ->schema([
                                 Forms\Components\Select::make('category_id')
                                     ->relationship('product_category', 'name')
                                     ->searchable()
                                     ->preload(),
-                                Forms\Components\TextInput::make('dosage'),
-                                Forms\Components\TextInput::make('side_effects'),
-                                Forms\Components\TextInput::make('contraindications'),
-                                Forms\Components\TextInput::make('packaging'),
-                                Forms\Components\TextInput::make('storage'),
-                                Forms\Components\Toggle::make('status'),
-                            ]),
-
-                        Forms\Components\Section::make('Image')
-                            ->schema([
+                                Forms\Components\Textarea::make('description')
+                                    ->rows(3),
                                 Forms\Components\FileUpload::make('image')
                                     ->directory('products_images')
                                     ->imageEditor(),
-                            ])->collapsible()
+                                Forms\Components\Toggle::make('status'),
+                            ]),
+                        Tabs\Tab::make('Additional Information')
+                            ->icon('heroicon-m-inbox-stack')
+                            ->schema([
+                                Forms\Components\Textarea::make('indications'),
+                                Forms\Components\Textarea::make('dosage'),
+                                Forms\Components\Textarea::make('side_effects'),
+                                Forms\Components\Textarea::make('contraindications'),
+                                Forms\Components\Textarea::make('packaging'),
+                                Forms\Components\Textarea::make('storage'),
+                            ]),
                     ])
+                    ->columnSpanFull()
+                    ->columns(2),
             ]);
     }
 
@@ -98,31 +97,65 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('product_category.name'),
-                Tables\Columns\TextColumn::make('made_in'),
-                Tables\Columns\TextColumn::make('manufacture_company'),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('effective_material'),
-                Tables\Columns\TextColumn::make('indications'),
-                Tables\Columns\TextColumn::make('dosage'),
-                Tables\Columns\TextColumn::make('side_effects'),
-                Tables\Columns\TextColumn::make('contraindications'),
-                Tables\Columns\TextColumn::make('packaging'),
-                Tables\Columns\TextColumn::make('storage'),
-                Tables\Columns\IconColumn::make('status')->boolean()
-
-
-
-
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('product_category.name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('made_in')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('manufacture_company')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('effective_material')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('indications')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('dosage')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('side_effects')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('contraindications')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('packaging')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('storage')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\IconColumn::make('status')
+                    ->boolean()
+                    ->sortable(),
             ])
             ->filters([
                 //
+                Tables\Filters\SelectFilter::make('clint name')
+                    ->relationship('product_category', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
