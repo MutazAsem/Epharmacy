@@ -29,12 +29,18 @@ class ListOrders extends ListRecords
     public function getTabs(): array
     {
         return [
-            null => Tab::make('All'),
-            'New' => Tab::make()->query(fn ($query) => $query->where('status','new')),
-            'Processing' => Tab::make()->query(fn ($query) => $query->where('status','Processing')),
-            'Shipped' => Tab::make()->query(fn ($query) => $query->where('status','Shipped')),
-            'Delivered' => Tab::make()->query(fn ($query) => $query->where('status','Delivered')),
-            'Cancelled' => Tab::make()->query(fn ($query) => $query->where('status','Cancelled')),
+            null => Tab::make('All')
+            ->icon('heroicon-o-rectangle-stack'),
+            'New' => Tab::make()->query(fn ($query) => $query->where('status','new'))
+            ->icon('heroicon-o-sparkles'),
+            'Processing' => Tab::make()->query(fn ($query) => $query->where('status','Processing'))
+            ->icon('heroicon-o-arrow-path'),
+            'Shipped' => Tab::make()->query(fn ($query) => $query->where('status','Shipped'))
+            ->icon('heroicon-o-truck'),
+            'Delivered' => Tab::make()->query(fn ($query) => $query->where('status','Delivered'))
+            ->icon('heroicon-o-check-circle'),
+            'Cancelled' => Tab::make()->query(fn ($query) => $query->where('status','Cancelled'))
+            ->icon('heroicon-o-x-circle'),
         ];
     }
 }

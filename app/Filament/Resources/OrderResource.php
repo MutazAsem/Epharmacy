@@ -56,11 +56,9 @@ class OrderResource extends Resource
 
                     Forms\Components\Wizard\Step::make('Order Items')
                         ->schema([
-
                             Forms\Components\Repeater::make('order_item')
                                 ->relationship()
                                 ->schema([
-
                                     Forms\Components\Select::make('product_id')
                                         ->options(Product::pluck('name', 'id'))
                                         ->required()
@@ -74,9 +72,7 @@ class OrderResource extends Resource
                                             $set('total_product_price', null);
                                             $set('unit_price', null);
                                         }),
-
                                     Forms\Components\Select::make('measurement_units_id')
-
                                         ->options(function (Forms\Get $get) {
                                             $productId = $get('product_id');
                                             if ($productId) {
@@ -108,7 +104,6 @@ class OrderResource extends Resource
                                         ->markAsRequired(false)
                                         ->label('Product Measurement Units')
                                         ->preload(),
-
                                     Forms\Components\TextInput::make('quantity')
                                         ->label('Quantity')
                                         ->required()
@@ -121,7 +116,6 @@ class OrderResource extends Resource
                                             $set('total_product_price', $unitPrice * $state);
                                         })
                                         ->numeric(),
-
                                     Forms\Components\TextInput::make('unit_price')
                                         ->label('Unit Price')
                                         ->required()
@@ -131,26 +125,21 @@ class OrderResource extends Resource
                                             $set('total_product_price', $quantity * $state);
                                         })
                                         ->minValue(0),
-
                                     Forms\Components\TextInput::make('total_product_price')
                                         ->required()
                                         ->markAsRequired(false)
                                         ->minValue(0)
                                         ->live(),
                                 ])->columns(5)
-
                         ]),
                     Forms\Components\Wizard\Step::make('Order Details')
                         ->schema([
-
-
                             Forms\Components\Select::make('client_id')
                                 ->required()
-                                ->markAsRequired(false)->markAsRequired(false) // Removes the asterisk
+                                ->markAsRequired(false)
                                 ->label('Client name')
                                 ->relationship('client_order', 'name')
                                 ->live(),
-
                             Forms\Components\Select::make('address_id')
                                 ->options(fn (Forms\Get $get) => Address::where('user_id', $get('client_id'))
                                     ->pluck('name', 'id'))
@@ -158,12 +147,10 @@ class OrderResource extends Resource
                                 ->required()
                                 ->markAsRequired(false)
                                 ->label('Address name'),
-
-
-
                             Forms\Components\Select::make('delivery_id')
                                 ->required()
-                                ->markAsRequired(false)->label('Delivery name')
+                                ->markAsRequired(false)
+                                ->label('Delivery name')
                                 ->options(User::whereHas('roles', function ($query) {
                                     $query->where('name', 'delivery');
                                 })->pluck('name', 'id')),
@@ -186,8 +173,6 @@ class OrderResource extends Resource
                                 ])
                                 ->inline()
                                 ->default('New'),
-
-
                             Placeholder::make('total_price')
                                 ->label('Total Price')
                                 ->content(function (Get $get, Set $set) {
@@ -202,10 +187,8 @@ class OrderResource extends Resource
                                     $set('total_price', $totalPrice);
                                     return $totalPrice;
                                 }),
-
                             Hidden::make('total_price')
                                 ->default(0),
-
                             Forms\Components\ToggleButtons::make('payment_method')
                                 ->required()
                                 ->markAsRequired(false)->options([
@@ -225,10 +208,6 @@ class OrderResource extends Resource
                             Forms\Components\Textarea::make('note')
                                 ->rows(2)
                                 ->columnSpanFull(),
-
-
-
-
                         ])->columns(2),
                 ])->columnSpanFull(),
             ]);
@@ -247,60 +226,37 @@ class OrderResource extends Resource
                     ->label('Client Name')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\SelectColumn::make('status')
                     ->options(OrderStatusEnum::class)
                     ->label('Status of order')
                     ->searchable()
                     ->sortable()
                     ->selectablePlaceholder(false),
-                // ->badge()
-                // ->color(fn (OrderStatusEnum $state): string => match ($state->value) {
-                //     'New' => 'info',
-                //     'Processing' => 'warning',
-                //     'Shipped' => 'warning',
-                //     'Delivered' => 'success',
-                //     'Cancelled' => 'danger',
-                // })
-                // ->icon(fn (OrderStatusEnum $state): string => match ($state->value) {
-                //     'New' => 'heroicon-o-sparkles',
-                //     'Processing' => 'heroicon-o-arrow-path',
-                //     'Shipped' => 'heroicon-o-truck',
-                //     'Delivered' => 'heroicon-o-check-circle',
-                //     'Cancelled' => 'heroicon-o-x-circle',
-                // }),
-
                 Tables\Columns\TextColumn::make('payment_method')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('order_address.name')
                     ->searchable()
                     ->label('Address name')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 Tables\Columns\TextColumn::make('total_price')
                     ->searchable()
                     ->sortable()
                     ->money('USD'),
-
                 Tables\Columns\TextColumn::make('order_delivery.name')
                     ->searchable()
                     ->label('Delivery name')
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('note')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->searchable()

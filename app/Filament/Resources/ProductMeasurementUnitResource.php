@@ -42,37 +42,26 @@ class ProductMeasurementUnitResource extends Resource
                 //
                 Forms\Components\Group::make()
                     ->schema([
-
                         Forms\Components\Section::make()
-
                             ->schema([
-
                                 Forms\Components\Select::make('product_id')
                                     ->required()
-                                    ->label('Product Name')
                                     ->markAsRequired(false)
+                                    ->label('Product Name')
                                     ->relationship('product_measuremen', 'name'),
-
                                 Forms\Components\Select::make('measurement_units_id')
                                     ->required()
-                                    ->label('Measurement Unit Name')
                                     ->markAsRequired(false)
+                                    ->label('Measurement Unit Name')
                                     ->relationship('product_unit', 'name'),
-
                                 Forms\Components\TextInput::make('quantity')
                                     ->required()
                                     ->markAsRequired(false),
-
                                 Forms\Components\TextInput::make('price')
                                     ->required()
                                     ->markAsRequired(false)
                                     ->numeric()
                                     ->minValue(0),
-
-
-
-
-
                             ])->columns(2)
                     ])->columnSpanFull(),
             ]);
@@ -87,22 +76,16 @@ class ProductMeasurementUnitResource extends Resource
                     ->label('Product Name')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('product_unit.name')
                     ->label('Measurement Unit Name')
                     ->searchable()
                     ->sortable(),
-
-
-
                 Tables\Columns\TextColumn::make('quantity')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('price')
                     ->searchable()
                     ->sortable(),
-
             ])
             ->filters([
                 //
@@ -110,11 +93,9 @@ class ProductMeasurementUnitResource extends Resource
                     ->relationship('product_measuremen', 'name'),
                 Tables\Filters\SelectFilter::make('Measurement Unit')
                     ->relationship('product_unit', 'name'),
-
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),

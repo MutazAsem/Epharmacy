@@ -33,17 +33,13 @@ class MeasruingUnitResource extends Resource
             ->schema([
                 Forms\Components\Group::make()
                     ->schema([
-
                         Forms\Components\Section::make()
-
                             ->schema([
                                 forms\Components\TextInput::make('name')
                                     ->label('Measruing Unit Name')
                                     ->required()
                                     ->markAsRequired(false),
                             ])
-
-
                     ])->columnSpanFull(),
             ]);
     }

@@ -38,7 +38,6 @@ class AlternativeProductResource extends Resource
                                     ->required()
                                     ->markAsRequired(false)
                                     ->label('Product name'),
-
                                 Forms\Components\Select::make('alternativ_product_id')
                                     ->relationship('alternativ_product', 'name')
                                     ->searchable()
@@ -47,7 +46,6 @@ class AlternativeProductResource extends Resource
                                     ->markAsRequired(false)
                                     ->label('Alternativ Product Name'),
                             ])
-
                     ])->columnSpanFull()
             ]);
     }
@@ -56,19 +54,15 @@ class AlternativeProductResource extends Resource
     {
         return $table
             ->columns([
-
                 Tables\Columns\TextColumn::make('product_alternativ.name')
                     ->label('Product Name')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('alternativ_product.name')
                     ->label('Alternativ Product Name')
                     ->searchable()
                     ->sortable(),
-
             ])
-
             ->filters([
                 Tables\Filters\SelectFilter::make('Product Name')
                     ->relationship('product_alternativ', 'name'),

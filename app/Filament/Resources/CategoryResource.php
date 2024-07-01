@@ -47,22 +47,15 @@ class CategoryResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name'),
-                                Forms\Components\TextInput::make('description')
-                            ])
-                    ]),
-
-                Forms\Components\Group::make()
-                    ->schema([
-                        Forms\Components\Section::make()
-                            ->schema([
                                 Forms\Components\Select::make('parent_id')
                                     ->relationship('parent', 'name')
                                     ->searchable()
                                     ->preload(),
-                                Forms\Components\Toggle::make('status'),
-                            ])
-                    ])
-
+                                Forms\Components\Textarea::make('description'),
+                                Forms\Components\Toggle::make('status')
+                                    ->default(true),
+                            ])->columns(2)
+                    ])->columnSpanFull()
             ]);
     }
 
@@ -71,18 +64,24 @@ class CategoryResource extends Resource
 
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
-                Tables\Columns\TextColumn::make('parent.name'),
-                Tables\Columns\IconColumn::make('status')->boolean(),
-
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('parent.name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('status')->boolean()
+                    ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('Parent Name')
+                    ->relationship('parent', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
