@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->enum('city', [$cities = config('cities.cities')]);
             $table->string('address_link')->nullable();
             $table->unsignedBigInteger('user_id');

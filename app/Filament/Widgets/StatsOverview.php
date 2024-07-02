@@ -5,6 +5,7 @@ namespace App\Filament\Widgets;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 class StatsOverview extends BaseWidget
 {
 
+    use HasWidgetShield;
+    
     protected static ?string $pollingInterval = '15s';
 
     protected static bool $isLazy = true;
