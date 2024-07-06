@@ -15,7 +15,7 @@ class LoginResponse implements LoginResponseContract
     {
         $user = Auth::user();
         // تحديد المسار الجديد بناءً على دور المستخدم، إذا كنت تستخدم Laratrust أو نظام أدوار آخر
-        $redirectPath = '/admin_dashboard';
+        $redirectPath = '/home';
 
         return redirect()->intended($redirectPath);
     }
