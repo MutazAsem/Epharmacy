@@ -14662,6 +14662,17 @@ input.cart-plus-minus-box {
   -webkit-box-shadow: none;
   box-shadow: none; }
 
+  .clamp-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 5; /* عدد الأسطر التي تريد عرضها */
+    line-height: 1.5; /* يجب أن يكون نفس line-height المستخدم في النص */
+    max-height: calc(1.5em * 5); /* يجب أن يكون نفس line-height مضروباً بعدد الأسطر */
+}
+
+
 @media (min-width: 768px) and (max-width: 991px) {
   .btn {
     padding: 12px 25px; }

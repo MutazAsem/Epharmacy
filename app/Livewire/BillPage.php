@@ -5,15 +5,13 @@ namespace App\Livewire;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('Bill - Epharmacy')]
 
-#[Title('Checkout - Epharmacy')]
-
-class CheckoutPage extends Component
+class BillPage extends Component
 {
-    
 
     public function render()
     {
-        return view('livewire.checkout-page');
+        return view('livewire.bill-page');
     }
 }
