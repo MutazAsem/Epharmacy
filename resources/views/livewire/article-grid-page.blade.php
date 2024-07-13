@@ -4,10 +4,10 @@
             <div class="row">
                 <!-- Blog Item -->
                 @foreach ($articles as $article)
-                <div class="col-lg-4 col-sm-6 col-12">
+                <div class="col-lg-4 col-sm-6 col-12" wire:key="{{ $article->id }}">
                     <div class="ltn__blog-item ltn__blog-item-3">
                         <div class="ltn__blog-img">
-                            <a href="blog-details.html"><img src="{{ url('storage', $article->image) }}" alt="#"></a>
+                            <a href="blog-details.html"><img src="{{ url('storage', $article->image) }}" alt="{{ $article->title }}"></a>
                         </div>
                         <div class="ltn__blog-brief">
                             <div class="ltn__blog-meta">
@@ -25,7 +25,7 @@
                                     </ul>
                                 </div>
                                 <div class="ltn__blog-btn">
-                                    <a href="{{ route('articleDetails', ['article' => $article->id]) }}">Read More</a>
+                                    <a href="{{ route('articleDetails', ['id' => $article->id]) }}">Read More</a>
                                 </div>
                             </div>
                         </div>
@@ -38,17 +38,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ltn__pagination-area text-center">
-                        <div class="ltn__pagination">
-                            <ul>
-                                <li><a href="#"><i class="fas fa-angle-double-left"></i></a></li>
-                                <li><a href="#">1</a></li>
-                                <li class="active"><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">10</a></li>
-                                <li><a href="#"><i class="fas fa-angle-double-right"></i></a></li>
-                            </ul>
-                        </div>
+                        {{$articles->links('pagination::bootstrap-5')}}
+
                     </div>
                 </div>
             </div>

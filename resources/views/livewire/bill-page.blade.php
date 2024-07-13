@@ -1,5 +1,24 @@
 <div style="margin-top: 40px">
-    <div class="container mt-5" style="direction: rtl; text-align: right;">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #invoiceToPrint, #invoiceToPrint * {
+                visibility: visible;
+            }
+            #invoiceToPrint {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+    <div class="container mt-5" id="invoiceToPrint" style="direction: rtl; text-align: right;">
         <div class="invoice-header row" style="background-color: #f8f9fa; padding: 10px;">
             <div class="col-md-6 text-right">
                 <h4>فاتورة</h4>
@@ -63,5 +82,15 @@
         <div class="invoice-footer mt-4" style="background-color: #f8f9fa; padding: 10px;">
             <p>ملاحظة: هذه الفاتورة تشمل الضرائب.</p>
         </div>
+
     </div>
+
+    <button class="btn btn-primary no-print" onclick="printInvoice()">طباعة الفاتورة</button>
+
+    <script>
+        function printInvoice() {
+            window.print();
+        }
+    </script>
+
 </div>

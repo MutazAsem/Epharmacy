@@ -21,7 +21,7 @@ class ArticleGridPage extends Component
         $articles = Article::with('writer');
 
         return view('livewire.article-grid-page',[
-            'articles' => $articles->paginate(9),
+            'articles' => $articles->paginate(6),
         ]);
     }
 }

@@ -97,7 +97,7 @@
         <!-- Mobile -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="mobile" value="{{ __('Mobile') }}" />
-            <x-input id="mobile" type="text" class="mt-1 block w-full" wire:model="state.mobile" required
+            <x-input id="mobile" type="tel" class="mt-1 block w-full" wire:model="state.mobile" required
                 autocomplete="mobile" />
             <x-input-error for="mobile" class="mt-2" />
         </div>

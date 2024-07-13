@@ -16,22 +16,16 @@
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="showing-product-number text-right">
-                                    <span>Showing 1–12 of 18 results</span>
-                                </div>
-                            </li>
-                            <li>
+                            {{-- <li>
                                 <div class="short-by text-center">
-                                    <select class="nice-select">
+                                    <select wire:model.live="sort" class="nice-select">
                                         <option>Default Sorting</option>
-                                        <option>Sort by popularity</option>
-                                        <option>Sort by new arrivals</option>
-                                        <option>Sort by price: low to high</option>
-                                        <option>Sort by price: high to low</option>
+                                        <option value="latest">Sort by new Latest</option>
+                                        <option value="">Sort by price: low to high</option>
+                                        <option value="">Sort by price: high to low</option>
                                     </select>
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -39,18 +33,19 @@
                             <div class="ltn__product-tab-content-inner ltn__product-grid-view">
                                 <div class="row">
                                     @foreach ($products as $product)
-                                        <div class="col-xl-4 col-sm-6 col-6">
+                                        <div class="col-xl-4 col-sm-6 col-6" wire:key="{{ $product->id }}">
                                             <div class="ltn__product-item ltn__product-item-3 text-center">
                                                 <div class="product-img">
                                                     <a wire:navigate
-                                                        href="{{ route('productDetails', ['product' => $product->id]) }}">
-                                                        <img src="{{ url('storage', $product->image) }}" alt="#">
+                                                        href="{{ route('productDetails', ['id' => $product->id]) }}">
+                                                        <img src="{{ url('storage', $product->image) }}"
+                                                            alt="{{ $product->name }}">
                                                     </a>
                                                     <div class="product-hover-action">
                                                         <ul>
                                                             <li>
                                                                 <a wire:navigate
-                                                                    href="{{ route('productDetails', ['product' => $product->id]) }}"
+                                                                    href="{{ route('productDetails', ['id' => $product->id]) }}"
                                                                     title="Quick View" data-bs-toggle="modal"
                                                                     data-bs-target="#quick_view_modal">
                                                                     <i class="far fa-eye"></i>
@@ -69,7 +64,7 @@
                                                 <div class="product-info">
                                                     <h2 class="product-title">
                                                         <a wire:navigate
-                                                            href="{{ route('productDetails', ['product' => $product->id]) }}">{{ $product->name }}</a>
+                                                            href="{{ route('productDetails', ['id' => $product->id]) }}">{{ $product->name }}</a>
                                                     </h2>
                                                     {{-- <div class="product-description">
                                                         {{ $product->description }}
@@ -100,18 +95,19 @@
                                 <div class="row">
                                     <!-- ltn__product-item -->
                                     @foreach ($products as $product)
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-12" wire:key="{{ $product->id }}">
                                             <div class="ltn__product-item ltn__product-item-3">
                                                 <div class="product-img">
                                                     <a wire:navigate
-                                                        href="{{ route('productDetails', ['product' => $product->id]) }}">
-                                                        <img src="{{ url('storage', $product->image) }}" alt="#">
+                                                        href="{{ route('productDetails', ['id' => $product->id]) }}">
+                                                        <img src="{{ url('storage', $product->image) }}"
+                                                            alt="{{ $product->name }}">
                                                     </a>
                                                 </div>
                                                 <div class="product-info">
                                                     <h2 class="product-title">
                                                         <a wire:navigate
-                                                            href="{{ route('productDetails', ['product' => $product->id]) }}">{{ $product->name }}</a>
+                                                            href="{{ route('productDetails', ['id' => $product->id]) }}">{{ $product->name }}</a>
                                                     </h2>
                                                     @if ($product->product_measuremen->isNotEmpty())
                                                         @php
@@ -131,7 +127,7 @@
                                                         <ul>
                                                             <li>
                                                                 <a wire:navigate
-                                                                    href="{{ route('productDetails', ['product' => $product->id]) }}"
+                                                                    href="{{ route('productDetails', ['id' => $product->id]) }}"
                                                                     title="Quick View" data-bs-toggle="modal"
                                                                     data-bs-target="#quick_view_modal">
                                                                     <i class="far fa-eye"></i>
@@ -156,18 +152,9 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="ltn__pagination-area text-center">
-                        <div class="ltn__pagination">
-                            <ul>
-                                <li><a href="#"><i class="fas fa-angle-double-left"></i></a></li>
-                                <li><a href="#">1</a></li>
-                                <li class="active"><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">10</a></li>
-                                <li><a href="#"><i class="fas fa-angle-double-right"></i></a></li>
-                            </ul>
-                        </div>
+                        {{ $products->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -176,34 +163,47 @@
                         <div class="widget ltn__menu-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Product categories</h4>
                             <ul>
-                                <li><a wire:navigate href="portfolio-details.html">Hand Sanitizer <span><i
-                                                class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a wire:navigate href="portfolio-details.html">Lab N95 Face Mask <span><i
-                                                class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a wire:navigate href="portfolio-details.html">Hand Gloves <span><i
-                                                class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a wire:navigate href="portfolio-details.html">Medical Equipment <span><i
-                                                class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a wire:navigate href="portfolio-details.html">New Arrival Product <span><i
-                                                class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a wire:navigate href="portfolio-details.html">Uncategorized <span><i
-                                                class="fas fa-long-arrow-alt-right"></i></span></a></li>
-                                <li><a wire:navigate href="portfolio-details.html">Special Offers <span><i
-                                                class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                                {{-- @foreach ($categories as $cat)      
+                                <li><a wire:navigate href="portfolio-details.html">{{  $cat->name }} <span>
+                                    <i class="fas fa-long-arrow-alt-right"></i></span></a>
+                                </li>
+                                @endforeach --}}
+                                @foreach ($categories as $cat)
+                                    <div class="form-check" wire:key="{{ $cat->id }}">
+                                        <input class="form-check-input" type="checkbox" value="{{ $cat->id }}"
+                                            id="cat-{{ $cat->id }}" wire:model.live="selectedCategories">
+                                        <label class="form-check-label" for="cat-{{ $cat->id }}">
+                                            {{ $cat->name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+
                             </ul>
                         </div>
                         <!-- Price Filter Widget -->
-                        <div class="widget ltn__price-filter-widget">
+                        {{-- <div class="widget ltn__price-filter-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
                             <div class="price_filter">
                                 <div class="price_slider_amount">
                                     <input type="submit" value="Your range:" />
-                                    <input type="text" class="amount" name="price"
-                                        placeholder="Add Your Price" />
+                                    <input type="text" class="amount" name="price" placeholder="Add Your Price" />
                                 </div>
                                 <div class="slider-range"></div>
                             </div>
-                        </div>
+                        </div> --}}
+                        <!-- Price Filter Widget -->
+                        {{-- <div class="widget ltn__price-filter-widget">
+                            <h4 class="ltn__widget-title ltn__widget-title-border">Filter by price</h4>
+                            <div class="price_filter">
+                                <div class="price_slider_amount">
+                                    <input type="rang" max="1000" value="1000" step="10" />
+                                    <input type="text" class="amount" name="price" placeholder="Add Your Price"
+                                        wire:model="minPrice" />
+                                    <input type="text" class="amount" name="price" placeholder="Add Your Price"
+                                        wire:model="maxPrice" />
+                                </div>
+                            </div>
+                        </div> --}}
                     </aside>
                 </div>
             </div>

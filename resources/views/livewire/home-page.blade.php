@@ -6,7 +6,7 @@
              <!-- ltn__slide-item -->
              @foreach ($articles as $article)
                  <div class="ltn__slide-item ltn__slide-item-2  ltn__slide-item-3-normal--- ltn__slide-item-3 bg-image bg-overlay-theme-black-60---"
-                     data-bs-bg="{{ url('storage', $article->image) }}">
+                     data-bs-bg="{{ url('storage', $article->image) }}" wire:key="{{ $article->id }}">
                      <div class="ltn__slide-item-inner  text-right text-end">
                          <div class="container">
                              <div class="row">
@@ -21,7 +21,7 @@
                                              </div>
                                              <div class="btn-wrapper animated">
                                                  <a wire:navigate
-                                                     href="{{ route('articleDetails', ['article' => $article->id]) }}"
+                                                     href="{{ route('articleDetails', ['id' => $article->id]) }}"
                                                      class="theme-btn-1 btn btn-effect-1">Read More</a>
                                              </div>
                                          </div>
@@ -174,7 +174,7 @@
              <div class="row">
                  <div class="col-lg-12">
                      <div class="section-title-area ltn__section-title-2 text-center">
-                         <h1 class="section-title">Featured Products</h1>
+                         <h1 class="section-title">Leatest Products</h1>
                      </div>
                  </div>
              </div>
@@ -184,16 +184,16 @@
                      <div class="row ltn__tab-product-slider-one-active--- slick-arrow-1">
                          <!-- ltn__product-item -->
                          @foreach ($products as $product)
-                         <div class="col-lg-3--- col-md-4 col-sm-6 col-6">
+                         <div class="col-lg-3--- col-md-4 col-sm-6 col-6" wire:key="{{ $product->id }}">
                              <div class="ltn__product-item ltn__product-item-2 text-left">
                                  <div class="product-img">
                                      <a wire:navigate href="#"><img src="{{ url('storage', $product->image) }}"
-                                             alt="#"></a>
+                                             alt="{{ $product->name }}"></a>
                                      <div class="product-hover-action">
                                          <ul>
                                              <li>
                                                  <a wire:navigate
-                                                     href="{{ route('productDetails', ['product' => $product->id]) }}"
+                                                     href="{{ route('productDetails', ['id' => $product->id]) }}"
                                                      title="Quick View" data-bs-toggle="modal"
                                                      data-bs-target="#quick_view_modal">
                                                      <i class="far fa-eye"></i>
@@ -210,7 +210,7 @@
                                  </div>
                                  <div class="product-info">
                                      <h2 class="product-title"><a wire:navigate
-                                             href="{{ route('productDetails', ['product' => $product->id]) }}">{{ $product->name }}</a>
+                                             href="{{ route('productDetails', ['id' => $product->id]) }}">{{ $product->name }}</a>
                                      </h2>
                                      @if ($product->product_measuremen->isNotEmpty())
                                          @php
@@ -299,11 +299,11 @@
              <div class="row  ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal">
                  <!-- Blog Item -->
                  @foreach ($articles as $article)
-                 <div class="col-lg-12">
+                 <div class="col-lg-12" wire:key="{{ $article->id }}">
                      <div class="ltn__blog-item ltn__blog-item-3">
                          <div class="ltn__blog-img">
                              <a wire:navigate href="#"><img
-                                     src="{{ url('storage', $article->image) }}" alt="#"></a>
+                                     src="{{ url('storage', $article->image) }}" alt="{{ $article->title }}"></a>
                          </div>
                          <div class="ltn__blog-brief">
                              <div class="ltn__blog-meta">
@@ -322,7 +322,7 @@
                                      </ul>
                                  </div>
                                  <div class="ltn__blog-btn">
-                                     <a wire:navigate href="{{ route('articleDetails', ['article' => $article->id]) }}">Read More</a>
+                                     <a wire:navigate href="{{ route('articleDetails', ['id' => $article->id]) }}">Read More</a>
                                  </div>
                              </div>
                          </div>
