@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Article;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -10,10 +11,18 @@ use Livewire\Component;
 
 class ArticleDetailsPage extends Component
 {
-    
+    public $id;
+
+    public function mount($id){
+        $this->id = $id;
+    }
 
     public function render()
     {
-        return view('livewire.article-details-page');
+        $article = Article::where('id',$this->id)->with('writer')->firstOrFail();
+
+        return view('livewire.article-details-page',[
+            'article' => $article,
+        ]);
     }
 }

@@ -41,12 +41,12 @@ Route::middleware([
     'verified',
 ])->group(function () {
     // Route::get('/home1', HomePage::class)->name('dashboard');
-    Route::get('/productDetails/{product}', ProductDetailsPage::class)->name('productDetails');
+    Route::get('/productDetails/{id}', ProductDetailsPage::class)->name('productDetails');
     Route::get('/profile', ProfilePage::class)->name('profile');
     Route::get('/cart', CartPage::class)->name('cart');
     Route::get('/checkout', CheckoutPage::class)->name('checkout');
-    Route::get('/articleDetails/{article}', ArticleDetailsPage::class)->name('articleDetails');
+    Route::get('/articleDetails/{id}', ArticleDetailsPage::class)->name('articleDetails');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
-    Route::get('/bill/{bill}',BillPage::class)->name('bill');
+    Route::get('/bill/{id}',BillPage::class)->name('bill');
 
 });

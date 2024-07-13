@@ -17,7 +17,7 @@
                                 <!-- <span><img src="img/icons/icon-img/23.png" alt="#"></span> -->
                                 <span><i class="fas fa-stethoscope"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">Special Medications <br> أدوية خاصة</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=3') }}">Special Medications <br> أدوية خاصة</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>أدوية خاصة بالحالات المزمنة تصرف بوصفة طبية</p>
@@ -31,7 +31,7 @@
                                 <!-- <span><img src="img/icons/icon-img/23.png" alt="#"></span> -->
                                 <span><i class="fas fa-syringe"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">Antibiotics <br> مضادات الحيوية</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=10') }}">Antibiotics <br> مضادات الحيوية</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>انواع مختلفة من المضادات الحيوية</p>
@@ -45,7 +45,7 @@
                                 <!-- <span><img src="img/icons/icon-img/23.png" alt="#"></span> -->
                                 <span><i class="fas fa-procedures"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">Pain Killers <br> مسكنات الألم</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=9') }}">Pain Killers <br> مسكنات الألم</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>انواع مختلفة من مسكنات الألم</p>
@@ -59,7 +59,7 @@
                                 <!-- <span><img src="img/icons/icon-img/23.png" alt="#"></span> -->
                                 <span><i class="fas fa-notes-medical"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">General Medicines <br> أدوية عامة</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=2') }}">General Medicines <br> أدوية عامة</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>أدوية عامة بدون وصفة طبية</p>
@@ -73,7 +73,7 @@
                                 <!-- <span><img src="img/icons/icon-img/23.png" alt="#"></span> -->
                                 <span><i class="fas fa-box-tissue"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">Makeup <br> مكياج</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=7') }}">Makeup <br> مكياج</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>منتجات تجميل</p>
@@ -87,7 +87,7 @@
                                 <!-- <span><img src="img/icons/icon-img/23.png" alt="#"></span> -->
                                 <span><i class="fas fa-pump-medical"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">Cosmetics <br> مستحضرات تجميل</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=6') }}">Cosmetics <br> مستحضرات تجميل</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>منتجات تهتم بالجمال والعناية الشخصية</p>
@@ -101,7 +101,7 @@
                                 <!-- <span><img src="img/icons/icon-img/21.png" alt="#"></span> -->
                                 <span><i class="fas fa-hand-holding-medical"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">First aid kits <br> أدوات الإسعافات الأولية</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=5') }}">First aid kits <br> أدوات الإسعافات الأولية</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>مجموعة متنوعة من المستلزمات الطبية الأساسية التي تستخدم لتقديم الرعاية الفورية في حالات
@@ -116,7 +116,7 @@
                                 <!-- <span><img src="img/icons/icon-img/22.png" alt="#"></span> -->
                                 <span><i class="fas fa-microscope"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">Medical Supplies <br> مستلزمات طبية</a></h3>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=4') }}">Medical Supplies <br> مستلزمات طبية</a></h3>
                         </div>
                         <div class="ltn__feature-info">
                             <p>مجموعة متنوعة من المستلزمات الطبية الأساسية التي تستخدم لتقديم الرعاية الفورية في حالات
@@ -131,7 +131,7 @@
                                 <!-- <span><img src="img/icons/icon-img/23.png" alt="#"></span> -->
                                 <span><i class="fas fa-tooth"></i> </span>
                             </div>
-                            <h3><a href="service-details.html">Personal Care Products <br> منتجات العناية الشخصية</a>
+                            <h3><a wire:navigate href="{{ url('/shop?selectedCategories[0]=8') }}">Personal Care Products <br> منتجات العناية الشخصية</a>
                             </h3>
                         </div>
                         <div class="ltn__feature-info">

@@ -5,53 +5,26 @@
                 <div class="col-lg-8">
                     <div class="ltn__blog-details-wrap">
                         <div class="ltn__page-details-inner ltn__blog-details-inner">
+                            <img src="{{ url('storage', $article->image) }}" alt="{{ $article->title }}" />
 
+                            <br><br>
                             <h2 class="ltn__blog-title">
-                                Lorem Ipsum has been the industry's standard dummy text ever
-                                since
+                                {{ $article->title }}
                             </h2>
                             <div class="ltn__blog-meta">
                                 <ul>
                                     <li class="ltn__blog-author">
-                                        <a href="#"><img src="{{ asset('client/img/blog/author.jpg') }}"
-                                                alt="#" />By: Ethan</a>
+                                        <a href="#"><img src="{{ url('storage', $article->writer->profile_photo_path) }}"
+                                                alt="{{ $article->writer->name }}" />By: {{ $article->writer->name }}</a>
                                     </li>
                                     <li class="ltn__blog-date">
-                                        <i class="far fa-calendar-alt"></i>June 22, 2020
+                                        <i class="far fa-calendar-alt"></i>{{ $article->created_at }}
                                     </li>
                                 </ul>
                             </div>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit
-                                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia
-                                deserunt mollit anim id est laborum. Sed ut perspiciatis
-                                unde omnis iste natus error sit voluptatem accusantium
-                                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                illo inventore veritatis et quasi architecto beatae vitae
-                                dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                voluptas sit aspernatur aut odit aut fugit, sed quia
-                                consequuntur magni dolores eos qui ratione voluptatem sequi
-                                nesciunt. Neque porro quisquam est, qui dolorem ipsum quia
-                                dolor sit amet, consectetur, adipisci velit, sed quia non
-                                numquam eius modi tempora incidunt ut labore et dolore
-                                magnam aliquam quaerat voluptatem.
+                                {{ $article->content }}
                             </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                sed do eiusmod tempor incididunt ut labore et dolore magna
-                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in voluptate velit
-                                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                occaecat cupidatat non proident, sunt in culpa qui officia
-                                deserunt.
-                            </p>
-                            <img src="{{ asset('client/img/blog/35.jpg') }}" alt="Image" />
                             <hr />
                         </div>
                     </div>
