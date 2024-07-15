@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('client/css/style.css') }}">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('client/css/responsive.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @livewireStyles
 </head>
 
@@ -41,6 +42,8 @@
     <!-- Main JS -->
     <script src="{{ asset('client/js/main.js') }}"></script>
     @livewireScripts
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
 </body>
 
 </html>

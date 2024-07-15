@@ -51,11 +51,32 @@
                                                                     <i class="far fa-eye"></i>
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a wire:navigate href="#" title="Add to Cart"
+                                                            {{-- <li>
+                                                                <a wire:click.prevent='addToCart({{ $product->id }})'
+                                                                    href="#" title="Add to Cart"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#add_to_cart_modal">
-                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                    <i class="fas fa-shopping-cart" wire:loading.remove
+                                                                        wire:target='addToCart({{ $product->id }})'></i>
+                                                                    <span wire:loading
+                                                                        wire:target='addToCart({{ $product->id }})'>Adding</span>
+                                                                </a>
+                                                            </li> --}}
+                                                            @if ($product->product_measuremen->isNotEmpty())
+                                                                @php
+                                                                    $firstMeasurementUnit = $product->product_measuremen->first();
+                                                                    $unitid=$firstMeasurementUnit->product_unit->id
+                                                                @endphp
+                                                            @endif
+                                                            <li>
+                                                                <a wire:click.prevent='addToCart({{ $product->id }}, {{ $unitid }})'
+                                                                    href="#" title="Add to Cart"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#add_to_cart_modal">
+                                                                    <i class="fas fa-shopping-cart" wire:loading.remove
+                                                                        wire:target='addToCart({{ $product->id }}, {{ $unitid }})'></i>
+                                                                    <span wire:loading
+                                                                        wire:target='addToCart({{ $product->id }}, {{ $unitid }})'>Adding</span>
                                                                 </a>
                                                             </li>
                                                         </ul>
@@ -73,12 +94,16 @@
                                                         @php
                                                             $firstMeasurementUnit = $product->product_measuremen->first();
                                                         @endphp
+                                                        <input type="hidden" wire:model.defer="productUnitId"
+                                                            value="{{ $firstMeasurementUnit->product_unit->id }}">
                                                         <div class="product-measurement">
                                                             <div class="product-measurement-unit">
                                                                 Unit: {{ $firstMeasurementUnit->product_unit->name }}
                                                             </div>
                                                             <div class="product-price">
                                                                 Price: ${{ $firstMeasurementUnit->price }}
+                                                                <input type="hidden" wire:model='productUnitId'
+                                                                    value="{{ $firstMeasurementUnit->product_unit->id }}">
                                                             </div>
                                                         </div>
                                                     @endif
@@ -118,6 +143,8 @@
                                                         </div>
                                                         <div class="product-measurement-unit">
                                                             Unit: {{ $firstMeasurementUnit->product_unit->name }}
+                                                            {{-- <input type="hidden" wire:model="productUnitId"
+                                                                value="{{ $firstMeasurementUnit->product_unit->id }}"> --}}
                                                         </div>
                                                     @endif
                                                     <div class="product-brief">
@@ -134,10 +161,14 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a wire:navigate href="#" title="Add to Cart"
+                                                                <a wire:click.prevent='addToCart({{ $product->id }})'
+                                                                    href="#" title="Add to Cart"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#add_to_cart_modal">
-                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                    <i class="fas fa-shopping-cart" wire:loading.remove
+                                                                        wire:target='addToCart({{ $product->id }})'></i>
+                                                                    <span wire:loading
+                                                                        wire:target='addToCart({{ $product->id }})'>Adding</span>
                                                                 </a>
                                                             </li>
                                                         </ul>
