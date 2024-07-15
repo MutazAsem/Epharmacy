@@ -91,7 +91,9 @@ class VehicleDetailResource extends Resource
             ->filters([
                 //
                 Tables\Filters\SelectFilter::make('delivery vehicle name')
-                    ->relationship('delivery_vehicle', 'name'),
+                    ->options(User::whereHas('roles', function ($query) {
+                        $query->where('name', 'delivery');
+                    })->pluck('name', 'id')),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

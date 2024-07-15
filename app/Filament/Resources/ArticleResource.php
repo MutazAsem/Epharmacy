@@ -77,8 +77,8 @@ class ArticleResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('Article Writer Name')
-                    ->relationship('writer', 'name'),
+                // Tables\Filters\SelectFilter::make('Article Writer Name')
+                //     ->relationship('writer', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

@@ -15,58 +15,10 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="modal-product-info shop-details-info pl-0">
-
-                                    <h3>Hand Sanitizer</h3>
-
-                                    <div class="modal-product-meta ltn__product-details-menu-1">
-                                        <ul>
-                                            <li>
-                                                <strong>Categories:</strong>
-                                                <span>
-                                                    <a href="#">face-mask</a>
-                                                    <a href="#">ppe-kit</a>
-                                                    <a href="#">safety-suits</a>
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="ltn__product-details-menu-2">
-                                        <ul>
-                                            <li>
-                                                <div class="cart-plus-minus">
-                                                    <input type="text" value="02" name="qtybutton"
-                                                        class="cart-plus-minus-box">
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="theme-btn-1 btn btn-effect-1"
-                                                    title="Add to Cart" data-bs-toggle="modal"
-                                                    data-bs-target="#add_to_cart_modal">
-                                                    <i class="fas fa-shopping-cart"></i>
-                                                    <span>ADD TO CART</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <hr>
-                                    <h4>Unit Price</h4>
-                                    <hr>
-                                    <div class="product-price">
-                                        <span>$49.00</span>
-                                        <span>قطعة</span>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="col-md-6">
                                 <div class="modal-product-info shop-details-info pl-0">
 
                                     <h3>{{ $product->name }}</h3>
-                                    {{-- <div class="product-price">
-                                        <span>$49.00</span>
-                                        <del>$65.00</del>
-                                    </div> --}}
                                     <div class="modal-product-meta ltn__product-details-menu-1">
                                         <ul>
                                             <li>
