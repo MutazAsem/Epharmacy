@@ -10,14 +10,14 @@ class CartManagement
 
 
     // add item to cart 
-    static public function addItemToCart($productId)
+    static public function addItemToCart($productId , $productUnitId)
     {
         $cartItems = self::getAllCartItemsFromCookie();
 
         $existingItem = null;
 
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId) {
+            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
                 $existingItem = $key;
                 break;
             }
@@ -26,18 +26,6 @@ class CartManagement
             $cartItems[$existingItem]['quantity']++;
             $cartItems[$existingItem]['totalAmount'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['unitAmount'];
         } else {
-            // $product = Product::where('id',$productId)->first(['id','name','price','images']);
-
-            // if ($product) {
-            //     $cartItems[] = [
-            //         'productId' => $product->id,
-            //         'name' => $product->name,
-            //         'image' => $product->image,
-            //         'quantity' => 1,
-            //         'unitAmount' => $product->price,
-            //         'total' => $product->price
-            //     ];
-            // }
             
             $product = Product::where('id', $productId)
                 ->with('product_measuremen.product_unit')
@@ -53,7 +41,49 @@ class CartManagement
                     'unitId' => $unit->product_unit->id,
                     'unitName' => $unit->product_unit->name,
                     'unitAmount' => $unit->price,
-                    'total' => $unit->price
+                    'totalAmount' => $unit->price
+                ];
+            }
+        }
+
+        self::addCartItemsToCookie($cartItems);
+        return count($cartItems);
+    }
+
+
+     // add item to cart with Qty
+    static public function addItemToCartWithQty($productId , $quantity , $productUnitId, $selectedUnitName ,  $selectedPrice)
+    {
+        $cartItems = self::getAllCartItemsFromCookie();
+
+        $existingItem = null;
+
+        foreach ($cartItems as $key => $item) {
+            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
+                $existingItem = $key;
+                break;
+            }
+        }
+        if ($existingItem !== null) {
+            $cartItems[$existingItem]['quantity'] = $quantity  + $cartItems[$existingItem]['quantity'];
+            $cartItems[$existingItem]['totalAmount'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['unitAmount'];
+        } else {
+            
+            $product = Product::where('id', $productId)
+                ->with('product_measuremen.product_unit')
+                ->first(['id', 'name', 'image']);
+
+            if ($product) {
+                // $unit = $product->product_measuremen->first(); // الحصول على أول وحدة قياس
+                $cartItems[] = [
+                    'productId' => $productId,
+                    'name' => $product->name,
+                    'image' => $product->image,
+                    'quantity' => $quantity,
+                    'unitId' => $productUnitId,
+                    'unitName' => $selectedUnitName,
+                    'unitAmount' =>  $selectedPrice,
+                    'totalAmount' => $selectedPrice * $quantity
                 ];
             }
         }
@@ -63,12 +93,12 @@ class CartManagement
     }
 
     // remove item from cart
-    static public function removeItemFromCart($productId)
+    static public function removeItemFromCart($productId , $productUnitId)
     {
         $cartItems = self::getAllCartItemsFromCookie();
 
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId) {
+            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
                 unset($cartItems[$key]);
             }
         }
@@ -107,14 +137,14 @@ class CartManagement
 
 
     // increment item quantity
-    static public function incrementQuantityToCartItem($productId)
+    static public function incrementQuantityToCartItem($productId , $productUnitId)
     {
         $cartItems = self::getAllCartItemsFromCookie();
 
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId) {
+            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
                 $cartItems[$key]['quantity']++;
-                $cartItems[$key]['total'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
+                $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
             }
         }
 
@@ -124,14 +154,14 @@ class CartManagement
 
 
     // decrement item quantity
-    static public function decrementQuantityToCartItem($productId)
+    static public function decrementQuantityToCartItem($productId , $productUnitId)
     {
         $cartItems = self::getAllCartItemsFromCookie();
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId) {
+            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
                 if ($cartItems[$key]['quantity'] > 1) {
                     $cartItems[$key]['quantity']--;
-                    $cartItems[$key]['total'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
+                    $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
                 }
             }
         }
@@ -144,6 +174,6 @@ class CartManagement
     // calculate grand total
     static public function calculateGrandTotal($item)
     {
-        return array_sum(array_column($item, 'total'));
+        return array_sum(array_column($item, 'totalAmount'));
     }
 }

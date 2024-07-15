@@ -2,7 +2,7 @@
     <!-- HEADER AREA START (header-3) -->
     <header class="ltn__header-area ltn__header-3">
         <!-- ltn__header-top-area start -->
-        <div class="ltn__header-top-area border-bottom">
+        {{-- <div class="ltn__header-top-area border-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-md-7">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ltn__header-top-area end -->
         <!-- ltn__header-middle-area start -->
         <div class="ltn__header-middle-area">
@@ -138,10 +138,10 @@
                                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
                                                 <span class="mini-cart-icon">
                                                     <i class="icon-shopping-cart"></i>
-                                                    <sup>2</sup>
+                                                    <sup>{{$totalCount}}</sup>
                                                 </span>
                                                 <h6><span>Your Cart</span> <span
-                                                        class="ltn__secondary-color">$89.25</span>
+                                                        class="ltn__secondary-color">${{$grandTotal}}</span>
                                                 </h6>
                                             </a>
                                         </div>

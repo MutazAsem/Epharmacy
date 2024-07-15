@@ -57,11 +57,21 @@
                                                 $firstMeasurementUnit = $productPrice->product_measuremen;
                                             @endphp
                                             @foreach ($firstMeasurementUnit as $pro)
-                                                <div class="product-price" style="font-size: 25px;" wire:key="{{ $pro->id }}" >
-                                                    <label><input type="radio" name="unit"
-                                                            value="{{ $pro->price }}">
-                                                        ${{ $pro->price }} -
-                                                        {{ $pro->product_unit->name }}</label><br>
+                                                <div class="product-price" style="font-size: 25px;"
+                                                    wire:key="{{ $pro->id }}">
+                                                    {{-- <label>
+                                                        <input type="radio" name="unit" value="{{ $pro->price }}"
+                                                            wire:model="selectedPrice"
+                                                            wire:change="updateProductUnit({{ $pro->product_unit->id }}, '{{ $pro->product_unit->name }}')"
+                                                            required>
+                                                        ${{ $pro->price }} - {{ $pro->product_unit->name }}
+                                                    </label><br> --}}
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="unit" name="unit" class="custom-control-input" value="{{ $pro->price }}"
+                                                        wire:model="selectedPrice"
+                                                        wire:change="updateProductUnit({{ $pro->product_unit->id }}, '{{ $pro->product_unit->name }}')">
+                                                        <label class="custom-control-label" for="unit">${{ $pro->price }} - {{ $pro->product_unit->name }}</label>
+                                                      </div>
                                                 </div>
                                             @endforeach
                                         @endif
@@ -69,17 +79,29 @@
                                     <div class="ltn__product-details-menu-2">
                                         <ul>
                                             <li>
-                                                <div class="cart-plus-minus">
-                                                    <input type="text" value="02" name="qtybutton"
-                                                        class="cart-plus-minus-box">
+                                                {{-- <div class="cart-plus-minus">
+                                                    <input type="text" wire:model="quantity" name="qtybutton"
+                                                        class="cart-plus-minus-box" >
+                                                </div> --}}
+                                                <div class="quantity-control" style="display: flex; align-items: center;">
+                                                    <button class="btn btn-primary" wire:click='decrementQty' style="margin: 0; padding: .375rem .75rem;">-</button>
+                                                    <input type="number"  wire:model="quantity" class="form-control quantity-input mx-2"  style="width: 70px; text-align: center;">
+                                                    <button class="btn btn-primary" wire:click='incrementQty' style="margin: 0; padding: .375rem .75rem;">+</button>
                                                 </div>
+                                                <br>
+                                                
+
                                             </li>
                                             <li>
-                                                <a href="#" class="theme-btn-1 btn btn-effect-1"
-                                                    title="Add to Cart" data-bs-toggle="modal"
-                                                    data-bs-target="#add_to_cart_modal">
+                                                <a wire:click.prevent='addToCart({{ $product->id }})' href="#"
+                                                    class="theme-btn-1 btn btn-effect-1" title="Add to Cart"
+                                                    data-bs-toggle="modal" data-bs-target="#add_to_cart_modal"
+                                                    @if(!$selectedPrice) disabled="disabled" style="pointer-events: none; opacity: 0.5; cursor: not-allowed;" @endif>
                                                     <i class="fas fa-shopping-cart"></i>
-                                                    <span>ADD TO CART</span>
+                                                    <span wire:loading.remove
+                                                        wire:target='addToCart({{ $product->id }})'>ADD TO CART</span>
+                                                    <span wire:loading
+                                                        wire:target='addToCart({{ $product->id }} )'>Adding TO CART</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -99,18 +121,19 @@
                         <div class="widget ltn__top-rated-product-widget">
                             <h4 class="ltn__widget-title ltn__widget-title-border">Alternative products</h4>
                             <ul>
-                                @foreach ($productAlternativ as $alternativ)  
-                                <li>
-                                    <div class="top-rated-product-item clearfix" wire:key="{{ $alternativ->id }}">
-                                        <div class="top-rated-product-img">
-                                            <a href="#"><img
-                                                    src="{{ url('storage', $alternativ->image) }}" alt="{{ $alternativ->name }}"></a>
+                                @foreach ($productAlternativ as $alternativ)
+                                    <li>
+                                        <div class="top-rated-product-item clearfix" wire:key="{{ $alternativ->id }}">
+                                            <div class="top-rated-product-img">
+                                                <a wire:navigate href="{{ route('productDetails', ['id' => $alternativ->id]) }}"><img src="{{ url('storage', $alternativ->image) }}"
+                                                        alt="{{ $alternativ->name }}"></a>
+                                            </div>
+                                            <div class="top-rated-product-info">
+                                                <h6><a wire:navigate href="{{ route('productDetails', ['id' => $alternativ->id]) }}">{{ $alternativ->name }}</a>
+                                                </h6>
+                                            </div>
                                         </div>
-                                        <div class="top-rated-product-info">
-                                            <h6><a href="{{ route('productDetails', ['id' => $alternativ->id]) }}">{{ $alternativ->name }}</a></h6>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>

@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Helpers\CartManagement;
+use App\Livewire\Layouts\Navbar;
 use App\Models\Product;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -11,7 +14,45 @@ use Livewire\Component;
 
 class ProductDetailsPage extends Component
 {
+
+    use LivewireAlert;
+
     public $id;
+    public $quantity = 1;
+    public $productUnitId;
+    public $selectedPrice;
+    public $selectedUnitName;
+
+    public function incrementQty(){
+        $this->quantity++;
+    }
+
+    public function decrementQty(){
+        if($this->quantity > 1){
+            $this->quantity--;
+        }
+        
+    }
+
+    public function updateProductUnit($id, $name)
+{
+    $this->productUnitId = $id;
+    $this->selectedUnitName = $name;
+}
+        // Add item to Cart
+        public function addToCart ($productId){
+            $totalCount = CartManagement::addItemToCartWithQty(
+                $productId , $this->quantity , $this->productUnitId, $this->selectedUnitName ,$this->selectedPrice);
+    
+            $this->dispatch('update-cart-count' , totalCount: $totalCount)->to(Navbar::class);
+    
+            $this->alert('success', 'Product added to the cart successfully', [
+                'position' => 'bottom-end',
+                'timer' => 1600,
+                'toast' => true,
+               ]);
+               
+        }
 
     public function mount($id){
         $this->id = $id;
