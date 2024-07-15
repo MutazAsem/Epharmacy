@@ -151,7 +151,7 @@ class ProductResource extends Resource
             ])
             ->filters([
                 //
-                Tables\Filters\SelectFilter::make('clint name')
+                Tables\Filters\SelectFilter::make('categories')
                     ->relationship('product_category', 'name'),
             ])
             ->actions([
