@@ -118,7 +118,7 @@ class OrderResource extends Resource
                                         ->numeric(),
                                     Forms\Components\TextInput::make('unit_price')
                                         ->label('Unit Price')
-                                        ->disabled()
+                                        // ->disabled()
                                         ->required()
                                         ->markAsRequired(false)
                                         ->afterStateUpdated(function ($state, callable $set, Forms\Get $get) {
@@ -128,7 +128,7 @@ class OrderResource extends Resource
                                         ->minValue(0),
                                     Forms\Components\TextInput::make('total_product_price')
                                         ->required()
-                                        ->disabled()
+                                        // ->disabled()
                                         ->markAsRequired(false)
                                         ->minValue(0)
                                         ->live(),
@@ -150,8 +150,8 @@ class OrderResource extends Resource
                                 ->disabled(fn (Forms\Get $get): bool => !filled($get('client_id')))
                                 ->required()
                                 ->markAsRequired(false)
-                                ->searchable()
-                                ->preload()
+                                // ->searchable()
+                                // ->preload()
                                 ->label('Address name'),
                             Forms\Components\Select::make('delivery_id')
                                 ->required()
