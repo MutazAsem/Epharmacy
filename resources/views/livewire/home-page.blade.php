@@ -184,50 +184,62 @@
                      <div class="row ltn__tab-product-slider-one-active--- slick-arrow-1">
                          <!-- ltn__product-item -->
                          @foreach ($products as $product)
-                         <div class="col-lg-3--- col-md-4 col-sm-6 col-6" wire:key="{{ $product->id }}">
-                             <div class="ltn__product-item ltn__product-item-2 text-left">
-                                 <div class="product-img">
-                                     <a wire:navigate href="#"><img src="{{ url('storage', $product->image) }}"
-                                             alt="{{ $product->name }}"></a>
-                                     <div class="product-hover-action">
-                                         <ul>
-                                             <li>
-                                                 <a wire:navigate
-                                                     href="{{ route('productDetails', ['id' => $product->id]) }}"
-                                                     title="Quick View" data-bs-toggle="modal"
-                                                     data-bs-target="#quick_view_modal">
-                                                     <i class="far fa-eye"></i>
-                                                 </a>
-                                             </li>
-                                             <li>
-                                                 <a wire:navigate href="#" title="Add to Cart"
-                                                     data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                     <i class="fas fa-shopping-cart"></i>
-                                                 </a>
-                                             </li>
-                                         </ul>
+                             <div class="col-lg-3--- col-md-4 col-sm-6 col-6" wire:key="{{ $product->id }}">
+                                 <div class="ltn__product-item ltn__product-item-2 text-left">
+                                     <div class="product-img">
+                                         <a wire:navigate href="#"><img
+                                                 src="{{ url('storage', $product->image) }}"
+                                                 alt="{{ $product->name }}"></a>
+                                         <div class="product-hover-action">
+                                             <ul>
+                                                 <li>
+                                                     <a wire:navigate
+                                                         href="{{ route('productDetails', ['id' => $product->id]) }}"
+                                                         title="Quick View" data-bs-toggle="modal"
+                                                         data-bs-target="#quick_view_modal">
+                                                         <i class="far fa-eye"></i>
+                                                     </a>
+                                                 </li>
+                                                 {{-- @if ($product->product_measuremen->isNotEmpty())
+                                                     @php
+                                                         $firstMeasurementUnit = $product->product_measuremen->first();
+                                                         $unitid = $firstMeasurementUnit->product_unit->id;
+                                                     @endphp
+                                                 @endif
+                                                 <li>
+                                                     <a wire:click.prevent='addToCart({{ $product->id }}, {{ $unitid }})'
+                                                         href="#" title="Add to Cart" data-bs-toggle="modal"
+                                                         data-bs-target="#add_to_cart_modal">
+                                                         <i class="fas fa-shopping-cart" wire:loading.remove
+                                                             wire:target='addToCart({{ $product->id }}, {{ $unitid }})'></i>
+                                                         <span wire:loading
+                                                             wire:target='addToCart({{ $product->id }}, {{ $unitid }})'>Adding</span>
+                                                     </a>
+                                                 </li> --}}
+                                                 
+                                             </ul>
+                                         </div>
+                                     </div>
+                                     <div class="product-info">
+                                         <h2 class="product-title"><a wire:navigate
+                                                 href="{{ route('productDetails', ['id' => $product->id]) }}">{{ $product->name }}</a>
+                                         </h2>
+                                         @if ($product->product_measuremen->isNotEmpty())
+                                             @php
+                                                 $firstMeasurementUnit = $product->product_measuremen->first();
+                                             @endphp
+                                             <div class="product-measurement">
+                                                 <div class="product-measurement-unit">
+                                                     Unit: {{ $firstMeasurementUnit->product_unit->name }}
+                                                 </div>
+                                                 <div class="product-price">
+                                                     Price: ${{ $firstMeasurementUnit->price }}
+                                                 </div>
+                                             </div>
+                                         @endif
                                      </div>
                                  </div>
-                                 <div class="product-info">
-                                     <h2 class="product-title"><a wire:navigate
-                                             href="{{ route('productDetails', ['id' => $product->id]) }}">{{ $product->name }}</a>
-                                     </h2>
-                                     @if ($product->product_measuremen->isNotEmpty())
-                                         @php
-                                             $firstMeasurementUnit = $product->product_measuremen->first();
-                                         @endphp
-                                         <div class="product-measurement">
-                                             <div class="product-measurement-unit">
-                                                 Unit: {{ $firstMeasurementUnit->product_unit->name }}
-                                             </div>
-                                             <div class="product-price">
-                                                 Price: ${{ $firstMeasurementUnit->price }}
-                                             </div>
-                                         </div>
-                                     @endif
-                                 </div>
                              </div>
-                         </div>
                          @endforeach
                      </div>
                  </div>
@@ -299,35 +311,39 @@
              <div class="row  ltn__blog-slider-one-active slick-arrow-1 ltn__blog-item-3-normal">
                  <!-- Blog Item -->
                  @foreach ($articles as $article)
-                 <div class="col-lg-12" wire:key="{{ $article->id }}">
-                     <div class="ltn__blog-item ltn__blog-item-3">
-                         <div class="ltn__blog-img">
-                             <a wire:navigate href="#"><img
-                                     src="{{ url('storage', $article->image) }}" alt="{{ $article->title }}"></a>
-                         </div>
-                         <div class="ltn__blog-brief">
-                             <div class="ltn__blog-meta">
-                                 <ul>
-                                     <li class="ltn__blog-author">
-                                         <a wire:navigate href="#"><i class="far fa-user"></i>by: {{ $article->writer->name }}</a>
-                                     </li>
-                                 </ul>
+                     <div class="col-lg-12" wire:key="{{ $article->id }}">
+                         <div class="ltn__blog-item ltn__blog-item-3">
+                             <div class="ltn__blog-img">
+                                 <a wire:navigate href="#"><img src="{{ url('storage', $article->image) }}"
+                                         alt="{{ $article->title }}" width="350px" height="450px"></a>
                              </div>
-                             <h3 class="ltn__blog-title"><a href="#">{{ $article->title }}</a></h3>
-                             <div class="ltn__blog-meta-btn">
+                             <div class="ltn__blog-brief">
                                  <div class="ltn__blog-meta">
                                      <ul>
-                                         <li class="ltn__blog-date"><i class="far fa-calendar-alt"></i>{{ $article->created_at }}
+                                         <li class="ltn__blog-author">
+                                             <a wire:navigate href="#"><i class="far fa-user"></i>by:
+                                                 {{ $article->writer->name }}</a>
                                          </li>
                                      </ul>
                                  </div>
-                                 <div class="ltn__blog-btn">
-                                     <a wire:navigate href="{{ route('articleDetails', ['id' => $article->id]) }}">Read More</a>
+                                 <h3 class="ltn__blog-title"><a href="#">{{ $article->title }}</a></h3>
+                                 <div class="ltn__blog-meta-btn">
+                                     <div class="ltn__blog-meta">
+                                         <ul>
+                                             <li class="ltn__blog-date"><i
+                                                     class="far fa-calendar-alt"></i>{{ $article->created_at }}
+                                             </li>
+                                         </ul>
+                                     </div>
+                                     <div class="ltn__blog-btn">
+                                         <a wire:navigate
+                                             href="{{ route('articleDetails', ['id' => $article->id]) }}">Read
+                                             More</a>
+                                     </div>
                                  </div>
                              </div>
                          </div>
                      </div>
-                 </div>
                  @endforeach
                  <!--  -->
              </div>

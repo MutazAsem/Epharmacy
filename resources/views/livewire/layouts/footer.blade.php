@@ -80,13 +80,14 @@
                                      <li>
                                          <a wire:navigate href="{{ route('about') }}">About</a>
                                      </li>
-                                     @if (auth()->check() && auth()->user()->hasAnyRole(['super_admin', 'content_manager']))
-                                     <li>
-                                         <a href="{{ url('/admin_dashboard') }}">Dashboard</a>
-                                     </li>
-                                 @endif
-                                 
-                                     
+                                     @if (auth()->check() &&
+                                             auth()->user()->hasAnyRole(['super_admin', 'content_manager']))
+                                         <li>
+                                             <a href="{{ url('/admin_dashboard') }}">Dashboard</a>
+                                         </li>
+                                     @endif
+
+
 
                                  </ul>
                              </div>

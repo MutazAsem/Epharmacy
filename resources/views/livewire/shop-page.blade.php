@@ -51,34 +51,29 @@
                                                                     <i class="far fa-eye"></i>
                                                                 </a>
                                                             </li>
-                                                            {{-- <li>
-                                                                <a wire:click.prevent='addToCart({{ $product->id }})'
-                                                                    href="#" title="Add to Cart"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#add_to_cart_modal">
-                                                                    <i class="fas fa-shopping-cart" wire:loading.remove
-                                                                        wire:target='addToCart({{ $product->id }})'></i>
-                                                                    <span wire:loading
-                                                                        wire:target='addToCart({{ $product->id }})'>Adding</span>
-                                                                </a>
-                                                            </li> --}}
-                                                            @if ($product->product_measuremen->isNotEmpty())
-                                                                @php
-                                                                    $firstMeasurementUnit = $product->product_measuremen->first();
-                                                                    $unitid=$firstMeasurementUnit->product_unit->id
-                                                                @endphp
+
+                                                            @if (Auth::check())
+                                                                @if ($product->product_measuremen->isNotEmpty())
+                                                                    @php
+                                                                        $firstMeasurementUnit = $product->product_measuremen->first();
+                                                                        $unitid =
+                                                                            $firstMeasurementUnit->product_unit->id;
+                                                                    @endphp
+                                                                @endif
+                                                                <li>
+                                                                    <a wire:click.prevent='addToCart({{ $product->id }}, {{ $unitid }})'
+                                                                        href="#" title="Add to Cart"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#add_to_cart_modal">
+                                                                        <i class="fas fa-shopping-cart"
+                                                                            wire:loading.remove
+                                                                            wire:target='addToCart({{ $product->id }}, {{ $unitid }})'></i>
+                                                                        <span wire:loading
+                                                                            wire:target='addToCart({{ $product->id }}, {{ $unitid }})'>Adding</span>
+                                                                    </a>
+                                                                </li>
                                                             @endif
-                                                            <li>
-                                                                <a wire:click.prevent='addToCart({{ $product->id }}, {{ $unitid }})'
-                                                                    href="#" title="Add to Cart"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#add_to_cart_modal">
-                                                                    <i class="fas fa-shopping-cart" wire:loading.remove
-                                                                        wire:target='addToCart({{ $product->id }}, {{ $unitid }})'></i>
-                                                                    <span wire:loading
-                                                                        wire:target='addToCart({{ $product->id }}, {{ $unitid }})'>Adding</span>
-                                                                </a>
-                                                            </li>
+
                                                         </ul>
                                                     </div>
                                                 </div>

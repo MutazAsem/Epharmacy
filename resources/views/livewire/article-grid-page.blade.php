@@ -7,7 +7,7 @@
                 <div class="col-lg-4 col-sm-6 col-12" wire:key="{{ $article->id }}">
                     <div class="ltn__blog-item ltn__blog-item-3">
                         <div class="ltn__blog-img">
-                            <a href="blog-details.html"><img src="{{ url('storage', $article->image) }}" alt="{{ $article->title }}"></a>
+                            <a href="#"><img src="{{ url('storage', $article->image) }}" alt="{{ $article->title }}" width="350px" height="450px"></a>
                         </div>
                         <div class="ltn__blog-brief">
                             <div class="ltn__blog-meta">
@@ -17,7 +17,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <h3 class="ltn__blog-title"><a href="blog-details.html">{{ $article->title }}</a></h3>
+                            <h3 class="ltn__blog-title"><a href="#">{{ $article->title }}</a></h3>
                             <div class="ltn__blog-meta-btn">
                                 <div class="ltn__blog-meta">
                                     <ul>
