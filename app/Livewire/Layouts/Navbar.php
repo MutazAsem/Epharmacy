@@ -11,7 +11,7 @@ class Navbar extends Component
 
     public $totalCount = 0 ;
     public $cartItems = [];
-    public $grandTotal;
+    public $grandTotal = 0;
 
     public function mount() {
         $this->totalCount = count(CartManagement::getAllCartItemsFromCookie());

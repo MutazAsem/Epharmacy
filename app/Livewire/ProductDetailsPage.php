@@ -22,6 +22,8 @@ class ProductDetailsPage extends Component
     public $productUnitId;
     public $selectedPrice;
     public $selectedUnitName;
+    public $cartItems = [];
+    public $grandTotal;
 
     public function incrementQty(){
         $this->quantity++;
@@ -41,10 +43,14 @@ class ProductDetailsPage extends Component
 }
         // Add item to Cart
         public function addToCart ($productId){
-            $totalCount = CartManagement::addItemToCartWithQty(
+            $this->cartItems = CartManagement::addItemToCartWithQty(
                 $productId , $this->quantity , $this->productUnitId, $this->selectedUnitName ,$this->selectedPrice);
     
-            $this->dispatch('update-cart-count' , totalCount: $totalCount)->to(Navbar::class);
+
+            $this->grandTotal = CartManagement::calculateGrandTotal($this->cartItems);
+    
+            $this->dispatch('update-cart-total', grandTotal: $this->grandTotal)->to(Navbar::class);
+            $this->dispatch('update-cart-count' , totalCount: count($this->cartItems))->to(Navbar::class);
     
             $this->alert('success', 'Product added to the cart successfully', [
                 'position' => 'bottom-end',

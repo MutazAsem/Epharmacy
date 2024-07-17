@@ -48,6 +48,8 @@ class ProductMeasurementUnitResource extends Resource
                                     ->required()
                                     ->markAsRequired(false)
                                     ->label('Product Name')
+                                    ->searchable()
+                                    ->preload()
                                     ->relationship('product_measuremen', 'name'),
                                 Forms\Components\Select::make('measurement_units_id')
                                     ->required()
