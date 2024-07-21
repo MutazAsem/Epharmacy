@@ -17,14 +17,14 @@ class CartManagement
         $existingItem = null;
 
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
+            if ($item['product_id'] == $productId && $item['measurement_units_id'] == $productUnitId) {
                 $existingItem = $key;
                 break;
             }
         }
         if ($existingItem !== null) {
             $cartItems[$existingItem]['quantity']++;
-            $cartItems[$existingItem]['totalAmount'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['unitAmount'];
+            $cartItems[$existingItem]['total_product_price'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['unit_price'];
         } else {
             
             $product = Product::where('id', $productId)
@@ -34,14 +34,14 @@ class CartManagement
             if ($product) {
                 $unit = $product->product_measuremen->first(); // الحصول على أول وحدة قياس
                 $cartItems[] = [
-                    'productId' => $productId,
+                    'product_id' => $productId,
                     'name' => $product->name,
                     'image' => $product->image,
                     'quantity' => 1,
-                    'unitId' => $unit->product_unit->id,
+                    'measurement_units_id' => $unit->product_unit->id,
                     'unitName' => $unit->product_unit->name,
-                    'unitAmount' => $unit->price,
-                    'totalAmount' => $unit->price
+                    'unit_price' => $unit->price,
+                    'total_product_price' => $unit->price
                 ];
             }
         }
@@ -59,14 +59,14 @@ class CartManagement
         $existingItem = null;
 
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
+            if ($item['product_id'] == $productId && $item['measurement_units_id'] == $productUnitId) {
                 $existingItem = $key;
                 break;
             }
         }
         if ($existingItem !== null) {
             $cartItems[$existingItem]['quantity'] = $quantity  + $cartItems[$existingItem]['quantity'];
-            $cartItems[$existingItem]['totalAmount'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['unitAmount'];
+            $cartItems[$existingItem]['total_product_price'] = $cartItems[$existingItem]['quantity'] * $cartItems[$existingItem]['unit_price'];
         } else {
             
             $product = Product::where('id', $productId)
@@ -76,14 +76,14 @@ class CartManagement
             if ($product) {
                 // $unit = $product->product_measuremen->first(); // الحصول على أول وحدة قياس
                 $cartItems[] = [
-                    'productId' => $productId,
+                    'product_id' => $productId,
                     'name' => $product->name,
                     'image' => $product->image,
                     'quantity' => $quantity,
-                    'unitId' => $productUnitId,
+                    'measurement_units_id' => $productUnitId,
                     'unitName' => $selectedUnitName,
-                    'unitAmount' =>  $selectedPrice,
-                    'totalAmount' => $selectedPrice * $quantity
+                    'unit_price' =>  $selectedPrice,
+                    'total_product_price' => $selectedPrice * $quantity
                 ];
             }
         }
@@ -99,7 +99,7 @@ class CartManagement
         $cartItems = self::getAllCartItemsFromCookie();
 
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
+            if ($item['product_id'] == $productId && $item['measurement_units_id'] == $productUnitId) {
                 unset($cartItems[$key]);
             }
         }
@@ -143,9 +143,9 @@ class CartManagement
         $cartItems = self::getAllCartItemsFromCookie();
 
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
+            if ($item['product_id'] == $productId && $item['measurement_units_id'] == $productUnitId) {
                 $cartItems[$key]['quantity']++;
-                $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
+                $cartItems[$key]['total_product_price'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unit_price'];
             }
         }
 
@@ -159,10 +159,10 @@ class CartManagement
     {
         $cartItems = self::getAllCartItemsFromCookie();
         foreach ($cartItems as $key => $item) {
-            if ($item['productId'] == $productId && $item['unitId'] == $productUnitId) {
+            if ($item['product_id'] == $productId && $item['measurement_units_id'] == $productUnitId) {
                 if ($cartItems[$key]['quantity'] > 1) {
                     $cartItems[$key]['quantity']--;
-                    $cartItems[$key]['totalAmount'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unitAmount'];
+                    $cartItems[$key]['total_product_price'] = $cartItems[$key]['quantity'] * $cartItems[$key]['unit_price'];
                 }
             }
         }
@@ -175,6 +175,6 @@ class CartManagement
     // calculate grand total
     static public function calculateGrandTotal($item)
     {
-        return array_sum(array_column($item, 'totalAmount'));
+        return array_sum(array_column($item, 'total_product_price'));
     }
 }

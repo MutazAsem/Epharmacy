@@ -23,32 +23,32 @@
                                 <tbody>
 
                                     @forelse ($cartItems as $item)
-                                        <tr wire:key="{{ $item['productId'] }}">
+                                        <tr wire:key="{{ $item['product_id'] }}">
                                             <td class="">{{ $loop->iteration }}</td>
                                             <td class="cart-product-image">
-                                                <a href="{{ route('productDetails', ['id' => $item['productId']]) }}"><img
+                                                <a wire:navigate href="{{ route('productDetails', ['id' => $item['product_id']]) }}"><img
                                                         src="{{ url('storage', $item['image']) }}"
                                                         alt="{{ $item['name'] }}"></a>
                                             </td>
                                             <td class="cart-product-info">
-                                                <h4><a wire:navigate href="{{ route('productDetails', ['id' => $item['productId']]) }}">{{ $item['name'] }}</a></h4>
+                                                <h4><a wire:navigate href="{{ route('productDetails', ['id' => $item['product_id']]) }}">{{ $item['name'] }}</a></h4>
                                             </td>
                                             <td class="cart-product-price">${{ $item['unitName'] }}</td>
-                                            <td class="cart-product-price">{{ $item['unitAmount'] }}</td>
+                                            <td class="cart-product-price">{{ $item['unit_price'] }}</td>
                                             <td class="cart-product-quantity">
                                                 {{-- <div class="cart-plus-minus">
                                                     <input type="text" value="{{ $item['quantity'] }}"
                                                         name="qtybutton" class="cart-plus-minus-box">
                                                 </div> --}}
                                                 <div class="quantity-control" style="display: flex; align-items: center;">
-                                                    <button class="btn btn-primary" wire:click='decrementQty({{ $item['productId'] }}, {{ $item['unitId'] }})' style="margin: 0; padding: .375rem .75rem;">-</button>
+                                                    <button class="btn btn-primary" wire:click='decrementQty({{ $item['product_id'] }}, {{ $item['measurement_units_id'] }})' style="margin: 0; padding: .375rem .75rem;">-</button>
                                                     <input type="number" value="{{ $item['quantity'] }}"  class="form-control quantity-input mx-2"  style="width: 70px; text-align: center;">
-                                                    <button class="btn btn-primary" wire:click='incrementQty({{ $item['productId'] }}, {{ $item['unitId'] }})' style="margin: 0; padding: .375rem .75rem;">+</button>
+                                                    <button class="btn btn-primary" wire:click='incrementQty({{ $item['product_id'] }}, {{ $item['measurement_units_id'] }})' style="margin: 0; padding: .375rem .75rem;">+</button>
                                                 </div>
                                             </td>
-                                            <td class="cart-product-subtotal">${{ $item['totalAmount'] }}</td>
+                                            <td class="cart-product-subtotal">${{ $item['total_product_price'] }}</td>
                                             <td class="cart-product-remove">
-                                                <a wire:click='removeItem({{ $item['productId'] }} , {{ $item['unitId'] }})'
+                                                <a wire:click='removeItem({{ $item['product_id'] }} , {{ $item['measurement_units_id'] }})'
                                                     href="#"><i class="fa fa-close" style="font-size:36px;color:red"></i></a>
                                             </td>
                                         </tr>
@@ -73,8 +73,7 @@
                                 </tbody>
                             </table>
                             <div class="btn-wrapper text-right">
-                                {{-- wire:click='clearCart()' --}}
-                                <a wire:click='clearCart()' href="#" class="theme-btn-1 btn btn-effect-1">Proceed
+                                <a wire:navigate href="{{ route('checkout')}}" class="theme-btn-1 btn btn-effect-1">Proceed
                                     to checkout</a>
                             </div>
                             @endif

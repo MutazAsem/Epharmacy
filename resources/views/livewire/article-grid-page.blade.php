@@ -25,7 +25,7 @@
                                     </ul>
                                 </div>
                                 <div class="ltn__blog-btn">
-                                    <a href="{{ route('articleDetails', ['id' => $article->id]) }}">Read More</a>
+                                    <a wire:navigate href="{{ route('articleDetails', ['id' => $article->id]) }}">Read More</a>
                                 </div>
                             </div>
                         </div>
