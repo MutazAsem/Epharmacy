@@ -50,7 +50,7 @@
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">General Medicines <br> أدوية عامة</a></h6>
+                             <h6><a wire:navigate href="#">General Medicines <br> أدوية عامة</a></h6>
                          </div>
                      </div>
                  </div>
@@ -62,19 +62,19 @@
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">Makeup <br> مكياج</a></h6>
+                             <h6><a wire:navigate href="#">Makeup <br> مكياج</a></h6>
                          </div>
                      </div>
                  </div>
                  <div class="col-12">
                      <div class="ltn__category-item ltn__category-item-6 text-center">
                          <div class="ltn__category-item-img">
-                             <a wire:navigate href="shop.html">
+                             <a wire:navigate href="#">
                                  <i class="fas fa-pump-medical"></i>
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">Cosmetics <br> مستحضرات تجميل</a></h6>
+                             <h6><a wire:navigate href="#">Cosmetics <br> مستحضرات تجميل</a></h6>
                          </div>
                      </div>
                  </div>
@@ -93,12 +93,12 @@
                  <div class="col-12">
                      <div class="ltn__category-item ltn__category-item-6 text-center">
                          <div class="ltn__category-item-img">
-                             <a wire:navigate href="shop.html">
+                             <a wire:navigate href="#">
                                  <i class="fas fa-tooth"></i>
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">Personal Care Products <br> منتجات العناية
+                             <h6><a wire:navigate href="#">Personal Care Products <br> منتجات العناية
                                      الشخصية</a></h6>
                          </div>
                      </div>
@@ -106,60 +106,60 @@
                  <div class="col-12">
                      <div class="ltn__category-item ltn__category-item-6 text-center">
                          <div class="ltn__category-item-img">
-                             <a wire:navigate href="shop.html">
+                             <a wire:navigate href="#">
                                  <i class="fas fa-microscope"></i>
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">Medical Supplies <br> مستلزمات طبية</a></h6>
+                             <h6><a wire:navigate href="#">Medical Supplies <br> مستلزمات طبية</a></h6>
                          </div>
                      </div>
                  </div>
                  <div class="col-12">
                      <div class="ltn__category-item ltn__category-item-6 text-center">
                          <div class="ltn__category-item-img">
-                             <a wire:navigate href="shop.html">
+                             <a wire:navigate href="#">
                                  <i class="fas fa-syringe"></i>
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">Antibiotics <br> مضادات الحيوية</a></h6>
+                             <h6><a wire:navigate href="#">Antibiotics <br> مضادات الحيوية</a></h6>
                          </div>
                      </div>
                  </div>
                  <div class="col-12">
                      <div class="ltn__category-item ltn__category-item-6 text-center">
                          <div class="ltn__category-item-img">
-                             <a wire:navigate href="shop.html">
+                             <a wire:navigate href="#">
                                  <i class="fas fa-stethoscope"></i>
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">Special Medications <br> أدوية خاصة</a></h6>
+                             <h6><a wire:navigate href="#">Special Medications <br> أدوية خاصة</a></h6>
                          </div>
                      </div>
                  </div>
                  <div class="col-12">
                      <div class="ltn__category-item ltn__category-item-6 text-center">
                          <div class="ltn__category-item-img">
-                             <a wire:navigate href="shop.html">
+                             <a wire:navigate href="#">
                                  <i class="fas fa-hand-holding-medical"></i>
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">First aid kits <br> أدوات الإسعافات الأولية</a></h6>
+                             <h6><a wire:navigate href="#">First aid kits <br> أدوات الإسعافات الأولية</a></h6>
                          </div>
                      </div>
                  </div>
                  <div class="col-12">
                      <div class="ltn__category-item ltn__category-item-6 text-center">
                          <div class="ltn__category-item-img">
-                             <a wire:navigate href="shop.html">
+                             <a wire:navigate href="#">
                                  <i class="fas fa-procedures"></i>
                              </a>
                          </div>
                          <div class="ltn__category-item-name">
-                             <h6><a wire:navigate href="shop.html">Pain Killers <br> مسكنات الألم</a></h6>
+                             <h6><a wire:navigate href="#">Pain Killers <br> مسكنات الألم</a></h6>
                          </div>
                      </div>
                  </div>

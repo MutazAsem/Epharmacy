@@ -14,7 +14,7 @@
                                                 Details <i class="fas fa-home"></i></a>
                                             <a data-bs-toggle="tab" href="#liton_tab_1_2">Orders <i
                                                     class="fas fa-file-alt"></i></a>
-                                            <a data-bs-toggle="tab" href="#liton_tab_1_4">address <i
+                                            <a data-bs-toggle="tab" href="#liton_tab_1_4">Address <i
                                                     class="fas fa-map-marker-alt"></i></a>
                                         </div>
                                     </div>
@@ -31,35 +31,36 @@
                                                             <div class="col-md-6">
                                                                 <label> Name</label>
                                                                 <input type="text" name="ltn__name"
-                                                                    value="{{ $user->name }}" disabled>
+                                                                    value="{{ $user->name }}" readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Last name</label>
                                                                 <input type="text"
                                                                     name="ltn__lastname"value="{{ $user->last_name }}"
-                                                                    disabled>
+                                                                    readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Email:</label>
                                                                 <input type="email"
                                                                     name="ltn__email"value="{{ $user->email }}"
-                                                                    disabled>
+                                                                    readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Gender:</label>
                                                                 <input type="text"
                                                                     name="ltn__gender"value="{{ $user->gender }}"
-                                                                    disabled>
+                                                                    readonly>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label>Mobile:</label>
                                                                 <input type="text"
                                                                     name="ltn__mobile"value="{{ $user->mobile }}"
-                                                                    disabled>
+                                                                    readonly>
                                                             </div>
                                                         </div>
 
-                                                        <a href="{{ url('/user/profile')}}" > <button type="button" class="btn btn-primary"> Edit profile</button></a>
+                                                        <a href="{{ url('/user/profile') }}"> <button type="button"
+                                                                class="btn btn-primary"> Edit profile</button></a>
 
 
                                                     </form>
@@ -76,9 +77,9 @@
                                                                 <th>Order ID</th>
                                                                 <th>Status</th>
                                                                 <th>Payment Method</th>
-                                                                {{-- <th>Address ID</th> --}}
+                                                                <th>Address Name</th>
                                                                 <th>Total Price</th>
-                                                                <th>Delivery ID</th>
+                                                                <th>Delivery Name</th>
                                                                 <th>Create At</th>
                                                                 <th>Action</th>
 
@@ -90,12 +91,15 @@
                                                                     <td>{{ $order->id }}</td>
                                                                     <td>{{ $order->status }}</td>
                                                                     <td>{{ $order->payment_method }}</td>
-                                                                    {{-- <td>{{$order->user_address->name}}</td> --}}
+                                                                    <td>{{ $order->order_address->name }}</td>
                                                                     <td>{{ $order->total_price }}</td>
                                                                     <td>{{ $order->order_delivery->name }}</td>
-                                                                    <td>{{ $order->Created_at }}</td>
+                                                                    <td>{{ $order->created_at }}</td>
                                                                     <td><a
-                                                                            href="{{ route('bill', ['id' => $order->id]) }}">View</a>
+                                                                        wire:navigate href="{{ route('bill', ['id' => $order->id]) }}">
+                                                                            <button type="button"
+                                                                                class="btn btn-success">View</button>
+                                                                        </a>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -123,8 +127,20 @@
                                                                     <td>{{ $address->name }}</td>
                                                                     <td>{{ $address->description }}</td>
                                                                     <td>{{ $address->city }}</td>
-                                                                    <td><a
-                                                                            href="{{ route('bill', ['id' => $address->id]) }}">Edit</a>
+                                                                    <td>
+
+                                                                        <div class="btn-group" role="group"
+                                                                            aria-label="Basic mixed styles example">
+                                                                            <button type="button"
+                                                                                class="btn btn-danger"
+                                                                                wire:click="deleteAddress({{ $address->id }})">Delete</button>
+                                                                            <a
+                                                                            wire:navigate href="{{ route('editAddress', ['id' => $address->id]) }}"><button
+                                                                                    type="button"
+                                                                                    class="btn btn-warning">Edit</button></a>
+
+                                                                        </div>
+
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -132,6 +148,9 @@
                                                     </table>
                                                 </div>
                                             </div>
+                                            <a wire:navigate href="{{ route('address') }}"> <button type="button"
+                                                    class="btn btn-primary"> Create Address</button></a>
+
                                         </div>
 
                                     </div>

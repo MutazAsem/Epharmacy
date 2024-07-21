@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Livewire\AboutPage;
+use App\Livewire\AddressPage;
 use App\Livewire\ArticleDetailsPage;
 use App\Livewire\ArticleGridPage;
 use App\Livewire\BillPage;
 use App\Livewire\CartPage;
 use App\Livewire\CategoriesPage;
 use App\Livewire\CheckoutPage;
+use App\Livewire\EditAddressPage;
 use App\Livewire\HomePage;
 use App\Livewire\ProductDetailsPage;
 use App\Livewire\ProfilePage;
@@ -48,5 +50,7 @@ Route::middleware([
     Route::get('/articleDetails/{id}', ArticleDetailsPage::class)->name('articleDetails');
     Route::get('/logout',[AuthController::class,'logout'])->name('logout');
     Route::get('/bill/{id}',BillPage::class)->name('bill');
+    Route::get('/createAddress',AddressPage::class)->name('address');
+    Route::get('/editAddress/{id}',EditAddressPage::class)->name('editAddress');
 
 });

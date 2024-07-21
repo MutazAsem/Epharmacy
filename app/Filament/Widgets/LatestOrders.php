@@ -6,6 +6,7 @@ use App\Enums\OrderStatusEnum;
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
 use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
+use Filament\Actions\Action;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -92,8 +93,14 @@ class LatestOrders extends BaseWidget
                     ->sortable()
                     ->toggleable(),
             ])->actions([
-                Tables\Actions\EditAction::make()
+                Tables\Actions\ActionGroup::make([
+                    Action::make('Bill')
+                    ->url(fn ($record) => route('bill', ['id' => $record->id]))
+                    ->icon('heroicon-o-document-text'),
+                    Tables\Actions\EditAction::make()
                     ->url(fn (Order $record): string => OrderResource::getUrl('edit', ['record' => $record])),
+                ])
+               
             ]);
     }
 }

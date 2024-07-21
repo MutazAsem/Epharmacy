@@ -132,10 +132,24 @@
                                     </div>
                                 </li>
                                 @if (Auth::check())
-                                    <li>
+                                    {{-- <li>
                                         <!-- mini-cart 2 -->
                                         <div class="mini-cart-icon mini-cart-icon-2">
                                             <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
+                                                <span class="mini-cart-icon">
+                                                    <i class="icon-shopping-cart"></i>
+                                                    <sup>{{$totalCount}}</sup>
+                                                </span>
+                                                <h6><span>Your Cart</span> <span
+                                                        class="ltn__secondary-color">${{$grandTotal}}</span>
+                                                </h6>
+                                            </a>
+                                        </div>
+                                    </li> --}}
+                                    <li>
+                                        <!-- mini-cart 2 -->
+                                        <div class="mini-cart-icon mini-cart-icon-2">
+                                            <a wire:navigate href="{{ route('cart')}}" class="ltn__utilize-toggle">
                                                 <span class="mini-cart-icon">
                                                     <i class="icon-shopping-cart"></i>
                                                     <sup>{{$totalCount}}</sup>

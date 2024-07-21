@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductMeasurementUnit;
 use App\Models\User;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -285,6 +286,9 @@ class OrderResource extends Resource
                 Tables\Actions\ActionGroup::make([
 
                     Tables\Actions\ViewAction::make(),
+                    Action::make('Bill')
+                    ->url(fn ($record) => route('bill', ['id' => $record->id]))
+                    ->icon('heroicon-o-document-text'),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])

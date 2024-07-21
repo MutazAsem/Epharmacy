@@ -22,11 +22,12 @@ class OrderItem extends Model
 
     public function order_measurement_unit ():BelongsTo
     {
-        return $this->belongsTo(ProductMeasurementUnit::class,'measurement_units_id');
+        return $this->belongsTo(MeasruingUnit::class,'measurement_units_id');
     }
 
     public function order_item ():BelongsTo
     {
         return $this->belongsTo(Order::class,'order_id');
     }
+
 }
