@@ -57,20 +57,32 @@ class ProductResource extends Resource
                         Tabs\Tab::make('Basic Information')
                             ->icon('heroicon-m-inbox-arrow-down')
                             ->schema([
-                                Forms\Components\TextInput::make('name'),
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->markAsRequired(false),
                                 Forms\Components\Select::make('made_in')
                                     ->options(CountryEnum::class)
                                     ->searchable()
-                                    ->preload(),
-                                Forms\Components\TextInput::make('manufacture_company'),
-                                Forms\Components\TextInput::make('type'),
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false),
+                                Forms\Components\TextInput::make('manufacture_company')
+                                    ->required()
+                                    ->markAsRequired(false),
+                                Forms\Components\TextInput::make('type')
+                                    ->required()
+                                    ->markAsRequired(false),
                                 Forms\Components\TextInput::make('effective_material'),
                                 Forms\Components\Select::make('category_id')
                                     ->relationship('product_category', 'name')
                                     ->searchable()
-                                    ->preload(),
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false),
                                 Forms\Components\Textarea::make('description')
-                                    ->rows(3),
+                                    ->rows(3)
+                                    ->required()
+                                    ->markAsRequired(false),
                                 Forms\Components\FileUpload::make('image')
                                     ->directory('products_images')
                                     ->imageEditor(),

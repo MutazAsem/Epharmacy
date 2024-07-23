@@ -46,12 +46,18 @@ class CategoryResource extends Resource
                     ->schema([
                         Forms\Components\Section::make()
                             ->schema([
-                                Forms\Components\TextInput::make('name'),
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->markAsRequired(false),
                                 Forms\Components\Select::make('parent_id')
                                     ->relationship('parent', 'name')
                                     ->searchable()
-                                    ->preload(),
-                                Forms\Components\Textarea::make('description'),
+                                    ->preload()
+                                    ->required()
+                                    ->markAsRequired(false),
+                                Forms\Components\Textarea::make('description')
+                                    ->required()
+                                    ->markAsRequired(false),
                                 Forms\Components\Toggle::make('status')
                                     ->default(true),
                             ])->columns(2)
