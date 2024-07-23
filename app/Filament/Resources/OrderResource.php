@@ -278,7 +278,9 @@ class OrderResource extends Resource
                     ->relationship('client_order', 'name'),
 
                 Tables\Filters\SelectFilter::make('delivery name')
-                    ->relationship('order_delivery', 'name'),
+                    ->options(User::whereHas('roles', function ($query) {
+                        $query->where('name', 'delivery');
+                    })->pluck('name', 'id')),
 
 
             ])
@@ -287,8 +289,8 @@ class OrderResource extends Resource
 
                     Tables\Actions\ViewAction::make(),
                     Action::make('Bill')
-                    ->url(fn ($record) => route('bill', ['id' => $record->id]))
-                    ->icon('heroicon-o-document-text'),
+                        ->url(fn ($record) => route('bill', ['id' => $record->id]))
+                        ->icon('heroicon-o-document-text'),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])
