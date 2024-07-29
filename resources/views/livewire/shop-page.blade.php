@@ -156,14 +156,14 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a wire:click.prevent='addToCart({{ $product->id }})'
+                                                                <a wire:click.prevent='addToCart({{ $product->id }}, {{ $unitid }})'
                                                                     href="#" title="Add to Cart"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#add_to_cart_modal">
                                                                     <i class="fas fa-shopping-cart" wire:loading.remove
-                                                                        wire:target='addToCart({{ $product->id }})'></i>
+                                                                    wire:target='addToCart({{ $product->id }}, {{ $unitid }})'></i>
                                                                     <span wire:loading
-                                                                        wire:target='addToCart({{ $product->id }})'>Adding</span>
+                                                                    wire:target='addToCart({{ $product->id }}, {{ $unitid }})'>Adding</span>
                                                                 </a>
                                                             </li>
                                                         </ul>
