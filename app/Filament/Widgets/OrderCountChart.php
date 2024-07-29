@@ -13,7 +13,7 @@ class OrderCountChart extends ChartWidget
 
     protected static ?string $heading = 'Chart';
 
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 0;
 
     protected function getData(): array
     {
