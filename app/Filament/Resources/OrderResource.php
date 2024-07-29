@@ -120,6 +120,7 @@ class OrderResource extends Resource
                                     Forms\Components\TextInput::make('unit_price')
                                         ->label('Unit Price')
                                         // ->disabled()
+                                        ->readOnly()
                                         ->required()
                                         ->markAsRequired(false)
                                         ->afterStateUpdated(function ($state, callable $set, Forms\Get $get) {
@@ -130,6 +131,7 @@ class OrderResource extends Resource
                                     Forms\Components\TextInput::make('total_product_price')
                                         ->required()
                                         // ->disabled()
+                                        ->readOnly()
                                         ->markAsRequired(false)
                                         ->minValue(0)
                                         ->live(),

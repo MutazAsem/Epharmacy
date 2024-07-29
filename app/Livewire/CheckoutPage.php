@@ -44,18 +44,35 @@ class CheckoutPage extends Component
         $order->delivery_id = rand(6, 10);
         $order->note = $this->note;
 
+        if(Auth::user()->status == 1){
+            if ($order->save()) {
+                $order->order_item()->createMany($cartItems);
+                CartManagement::clearCartItemsFromCookie();
+                $this->alert('success', 'Order Placed successfully', [
+                    'position' => 'center',
+                    'timer' => 3000,
+                    'toast' => true,
+                ]);
+    
+                return redirect()->route('bill', ['id' => $order->id]);
+            }else{
+                $this->alert('error', 'Order Placed Failed', [
+                    'position' => 'center',
+                    'timer' => 3000,
+                    'toast' => true,
+                   ]);
 
-        if ($order->save()) {
-            $order->order_item()->createMany($cartItems);
-            CartManagement::clearCartItemsFromCookie();
-            $this->alert('success', 'Order Placed successfully', [
+            }
+
+        }else{
+            $this->alert('error', 'Your account is suspended, please contact the administrator', [
                 'position' => 'center',
                 'timer' => 3000,
                 'toast' => true,
             ]);
 
-            return redirect()->route('bill', ['id' => $order->id]);
         }
+
 
 
 

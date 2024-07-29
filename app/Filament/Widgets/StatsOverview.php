@@ -19,7 +19,7 @@ class StatsOverview extends BaseWidget
 
     protected static bool $isLazy = true;
 
-    protected static ?int $sort = 0;
+    protected static ?int $sort = 3;
 
     protected function getStats(): array
     {

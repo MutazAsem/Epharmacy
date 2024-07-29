@@ -58,6 +58,7 @@
                         <div class="site-logo">
                             <a wire:navigate href="{{ route('home') }}"><img src="{{ asset('client/img/logo.png') }}"
                                     alt="Logo" class="img-fluid w-25"></a>
+                            <span style="padding-left: 10px; font-size: 25px; color: #4184c5;">Epharmacy</span>
                         </div>
                     </div>
                     <div class="col header-contact-serarch-column d-none d-lg-block">
@@ -149,13 +150,13 @@
                                     <li>
                                         <!-- mini-cart 2 -->
                                         <div class="mini-cart-icon mini-cart-icon-2">
-                                            <a wire:navigate href="{{ route('cart')}}" class="ltn__utilize-toggle">
+                                            <a wire:navigate href="{{ route('cart') }}" class="ltn__utilize-toggle">
                                                 <span class="mini-cart-icon">
                                                     <i class="icon-shopping-cart"></i>
-                                                    <sup>{{$totalCount}}</sup>
+                                                    <sup>{{ $totalCount }}</sup>
                                                 </span>
                                                 <h6><span>Your Cart</span> <span
-                                                        class="ltn__secondary-color">${{$grandTotal}}</span>
+                                                        class="ltn__secondary-color">${{ $grandTotal }}</span>
                                                 </h6>
                                             </a>
                                         </div>
@@ -228,8 +229,8 @@
                                 <path d="M300,320 L540,320" id="middle"></path>
                                 <path
                                     d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
-                                    id="bottom"
-                                    transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                                    id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) ">
+                                </path>
                             </svg>
                         </a>
                     </div>
