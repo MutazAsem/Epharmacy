@@ -357,7 +357,7 @@
                             <a wire:navigate href="{{ route('cart') }}" title="Shoping Cart">
                                 <span class="utilize-btn-icon">
                                     <i class="fas fa-shopping-cart"></i>
-                                    <sup>5</sup>
+                                    <sup>{{ $totalCount }}</sup>
                                 </span>
                                 Shoping Cart
                             </a>
