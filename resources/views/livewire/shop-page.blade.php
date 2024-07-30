@@ -132,6 +132,7 @@
                                                     @if ($product->product_measuremen->isNotEmpty())
                                                         @php
                                                             $firstMeasurementUnit = $product->product_measuremen->first();
+                                                            $unitid = $firstMeasurementUnit->product_unit->id;
                                                         @endphp
                                                         <div class="product-price">
                                                             Price: ${{ $firstMeasurementUnit->price }}
