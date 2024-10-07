@@ -5,7 +5,7 @@
 To get started, clone this repository.
 
 ```
-git clone https://github.com/engsahaly/API-COURSE.git
+git clone https://github.com/MutazAsem/Epharmacy.git
 ```
 
 Next, copy your `.env.example` file as `.env` and configure your Database connection.
