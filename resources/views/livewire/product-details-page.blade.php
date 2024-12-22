@@ -85,7 +85,7 @@
                                                 </div> --}}
                                                 <div class="quantity-control" style="display: flex; align-items: center;">
                                                     <button class="btn btn-primary" wire:click='decrementQty' style="margin: 0; padding: .375rem .75rem;">-</button>
-                                                    <input type="number"  wire:model="quantity" class="form-control quantity-input mx-2"  style="width: 70px; text-align: center;">
+                                                    <input type="number"  wire:model="quantity" class="form-control quantity-input mx-2"  style="width: 70px; text-align: center;" readonly>
                                                     <button class="btn btn-primary" wire:click='incrementQty' style="margin: 0; padding: .375rem .75rem;">+</button>
                                                 </div>
                                                 <br>
